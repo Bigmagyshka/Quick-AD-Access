@@ -200,6 +200,7 @@ void Ask(QString path){
 	w.show();
 	w.exec();
 	if (*k) Run(path);
+	delete k;
 }
 
 void MainWindow::on_Need_Change_clicked(){

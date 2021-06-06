@@ -9,10 +9,9 @@ Client::Client(QWidget *parent):
 	ui->setupUi(this);
 }
 
-Client::~Client()
-{
+Client::~Client(){
 	delete ui;
-}
+ }
 
 void Client::addTab(int poz){
 	ui->Sities->addTab(&sities[poz],sities[poz].get_name());

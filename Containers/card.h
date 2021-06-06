@@ -19,6 +19,8 @@ public:
 	QString get_pas(){return password;}
 	void set_angry(bool _angry){is_angry = _angry;}
 	bool get_angry(){return is_angry;}
+
+	~my_button(){};
 };
 
 

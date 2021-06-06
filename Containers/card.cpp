@@ -56,6 +56,7 @@ int Card::add_Worker(QString Name, QString Position, QString Number){
 	ui->table_card_1->setItem(ui->table_card_1->rowCount()-1, 0, new QTableWidgetItem(Name));
 	ui->table_card_1->setItem(ui->table_card_1->rowCount()-1, 2, new QTableWidgetItem(Position));
 	ui->table_card_1->setItem(ui->table_card_1->rowCount()-1, 1, new QTableWidgetItem(Number));
+	return 1;
 }
 
 void Card::set_name(QString _name){

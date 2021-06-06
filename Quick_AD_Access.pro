@@ -44,6 +44,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-	Qt/Qt6Core.dll \
-	Sourse/logo.png \
+        Sourse/logo.png \
 	Sourse/main_db.db

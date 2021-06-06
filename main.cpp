@@ -19,23 +19,19 @@ void start(QString Folder){
 
 int main(int argc, char *argv[]){
 //	setlocale(LC_ALL, "Russian");
-	QString Folder = "./debug";
+
 	QApplication a(argc, argv);
 
-	QString New_Folder = argv[0];
-	New_Folder = New_Folder.left(New_Folder.lastIndexOf(QChar('\\')));
-
-	Folder = New_Folder;
+	QString Folder = argv[0];
+	Folder = Folder.left(Folder.lastIndexOf(QChar('\\')));
 
 	start(Folder);
 
 
-	MainWindow w;
-	w.set_path(Folder);
+	MainWindow *w = new MainWindow;
+	w->set_path(Folder);
+	w->read_DB(Folder);
+	w->show();
 
-	w.read_DB(Folder);
-
-
-	w.show();
 	return a.exec();
 }
