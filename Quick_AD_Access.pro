@@ -37,11 +37,13 @@ FORMS += \
     mainwindow.ui \
     start_window.ui
 
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+	Qt/Qt6Core.dll \
 	Sourse/logo.png \
 	Sourse/main_db.db

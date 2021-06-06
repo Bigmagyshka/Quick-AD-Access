@@ -39,6 +39,7 @@ public:
 	explicit Card(QWidget *parent = nullptr);
 	int add_PC(long _id, QString _password, QString _name, bool _angry);
 	int add_WP(long _id, QString _password, QString _name, bool _angry);
+	int add_Worker(QString Name, QString Position, QString Number);
 	int get_PC(){return PC;};
 	int get_WP(){return WP;};
 	void set_name(QString _name);

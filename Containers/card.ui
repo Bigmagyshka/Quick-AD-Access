@@ -18,19 +18,19 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>450</width>
+     <width>460</width>
      <height>200</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
-     <width>450</width>
+     <width>460</width>
      <height>200</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>450</width>
+     <width>460</width>
      <height>200</height>
     </size>
    </property>
@@ -87,18 +87,29 @@
     </item>
     <item>
      <widget class="QTableWidget" name="table_card_1">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="minimumSize">
        <size>
-        <width>302</width>
+        <width>320</width>
         <height>0</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>305</width>
+        <width>320</width>
         <height>16777215</height>
        </size>
       </property>
+      <column>
+       <property name="text">
+        <string>Имя</string>
+       </property>
+      </column>
       <column>
        <property name="text">
         <string>Телефон</string>

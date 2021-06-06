@@ -11,7 +11,7 @@ start_Window::start_Window(QWidget *parent) :
 }
 
 void start_Window::set_pic(QString Folder, QString ver){
-	QPixmap myPixmap( Folder + "/Sourse/logo.png" );
+	QPixmap myPixmap( Folder + "\\Sourse\\logo.png" );
 	ui->label_picture->setPixmap( myPixmap );
 	ui->Version->setText(ver);
 	ui->Author->setText("github.com/Bigmagyshka");

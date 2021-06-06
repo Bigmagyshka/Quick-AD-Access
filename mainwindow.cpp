@@ -48,6 +48,15 @@ void addButtons(int shop_id, QSqlDatabase db, Card &cur_card){
 	}
 }
 
+void addWorkers(int shop_id, QSqlDatabase db, Card &cur_card){
+	QSqlQuery Query(db);
+
+	Query.exec("SELECT * FROM Workers WHERE Workers.Shop_id = " + QString::number(shop_id));
+
+	while (Query.next())
+		cur_card.add_Worker(Query.value(1).toString(),Query.value(3).toString(),Query.value(2).toString());
+}
+
 
 Card* Add_Cards(QSqlDatabase db, int &cd, int id_client, int id_sity){
 	QSqlQuery Cards_Query(db);
@@ -75,6 +84,7 @@ Card* Add_Cards(QSqlDatabase db, int &cd, int id_client, int id_sity){
 		Cards[step].set_id(Cards_Query.value(0).toInt());
 		Cards[step].set_name(Cards_Query.value(1).toString());
 		addButtons(Cards[step].get_id(), db, Cards[step]);
+		addWorkers(Cards[step].get_id(), db, Cards[step]);
 		step++;
 	}
 

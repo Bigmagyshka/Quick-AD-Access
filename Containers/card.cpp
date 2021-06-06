@@ -51,6 +51,13 @@ int Card::add_WP(long _id, QString _password, QString _name, bool _angry){
 	return (WP-1);
 }
 
+int Card::add_Worker(QString Name, QString Position, QString Number){
+	ui->table_card_1->insertRow(ui->table_card_1->rowCount());
+	ui->table_card_1->setItem(ui->table_card_1->rowCount()-1, 0, new QTableWidgetItem(Name));
+	ui->table_card_1->setItem(ui->table_card_1->rowCount()-1, 2, new QTableWidgetItem(Position));
+	ui->table_card_1->setItem(ui->table_card_1->rowCount()-1, 1, new QTableWidgetItem(Number));
+}
+
 void Card::set_name(QString _name){
 	name = _name;
 	ui->card_1->setTitle(name);
