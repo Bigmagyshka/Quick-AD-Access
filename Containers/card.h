@@ -12,7 +12,6 @@ class my_button : public QPushButton{
 
 public:
 	explicit my_button(QWidget *parent);
-	explicit my_button(QWidget *parent, long _id);
 	void set_id(long z){id = z;}
 	long get_id(){return id;}
 	void set_pas(QString _pas){password = _pas;}

@@ -4,6 +4,12 @@
 #include <QMainWindow>
 #include "Containers/client.h"
 
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlRecord>
+#include <QSqlError>
+#include <QSqlDriver>
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -11,26 +17,27 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT
-	QString path;
+	QString path, path_normal;
 	Client *Clients;
+	QSqlDatabase db;
 
 public:
-	MainWindow(QWidget *parent = nullptr);
+	MainWindow(QWidget *parent);
+	MainWindow();
 
 	void set_path (QString P){
 		path = P + "/AnyDesk.exe ";
+		path_normal = P;
 	}
 
-	bool read_DB(QString Folder);
+	bool read_DB();
 
 
 	~MainWindow();
 
 public slots:
 	void open_connect();
-
-private slots:
-	void on_Need_Change_clicked();
+	void Reload_DB();
 
 private:
 	Ui::MainWindow *ui;

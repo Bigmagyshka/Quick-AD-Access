@@ -30,7 +30,7 @@ int main(int argc, char *argv[]){
 
 	MainWindow *w = new MainWindow;
 	w->set_path(Folder);
-	w->read_DB(Folder);
+	w->read_DB();
 	w->show();
 
 	return a.exec();

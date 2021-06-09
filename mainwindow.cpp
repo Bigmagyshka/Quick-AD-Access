@@ -7,13 +7,6 @@
 #include "My_error.h"
 #include "ask.h"
 
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QSqlError>
-#include <QSqlDriver>
-
-
 void Run(QString path);
 void Ask(QString path);
 
@@ -21,6 +14,16 @@ MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 	, ui(new Ui::MainWindow){
 	ui->setupUi(this);
+
+	ui->menu->addAction("Reload_DB_2",this,SLOT(Reload_DB()));
+}
+
+MainWindow::MainWindow()
+	: QMainWindow()
+	, ui(new Ui::MainWindow){
+	ui->setupUi(this);
+	db = QSqlDatabase::addDatabase("QSQLITE");
+	ui->menu->addAction("Reload_DB_2",this,SLOT(Reload_DB()));
 }
 
 MainWindow::~MainWindow(){
@@ -57,7 +60,6 @@ void addWorkers(int shop_id, QSqlDatabase db, Card &cur_card){
 		cur_card.add_Worker(Query.value(1).toString(),Query.value(3).toString(),Query.value(2).toString());
 }
 
-
 Card* Add_Cards(QSqlDatabase db, int &cd, int id_client, int id_sity){
 	QSqlQuery Cards_Query(db);
 
@@ -72,6 +74,7 @@ Card* Add_Cards(QSqlDatabase db, int &cd, int id_client, int id_sity){
 	if (cd == 0) return nullptr;
 
 	Card *Cards = new Card [cd];
+
 	Cards_Query.exec("SELECT t1.id, t1.Address "
 						"FROM Shops as t1 "
 						"JOIN Clients as t2 on t1.Owner_id = t2.id "
@@ -91,8 +94,7 @@ Card* Add_Cards(QSqlDatabase db, int &cd, int id_client, int id_sity){
 	return Cards;
 }
 
-
-Sity* Add_Sities(QSqlDatabase db, int &st, int id){
+Sity* Add_Sities(QSqlDatabase db, int &st, int id, Client *cl){
 	QSqlQuery Sities_Query(db);
 
 	Sities_Query.exec("SELECT count (DISTINCT Sities.Name) FROM Shops "
@@ -103,6 +105,9 @@ Sity* Add_Sities(QSqlDatabase db, int &st, int id){
 	if (st == 0) return nullptr;
 
 	Sity *Sities = new Sity [st];
+	for (int i = 0; i < st; i++)
+		Sities[i].setParent(cl);
+
 	Sities_Query.exec("SELECT DISTINCT t1.id, t1.Name FROM Shops as t2 "
 						"JOIN Sities as t1 on t1.id = t2.Sity_id "
 						"WHERE t2.Owner_id = " + QString::number(id) + " ORDER BY t1.Name");
@@ -137,7 +142,7 @@ Client* Add_Clients(QSqlDatabase db, int &cl){
 	while (Clients_Query.next()){
 		Clients[step].set_id(Clients_Query.value(0).toInt());
 		Clients[step].set_name(Clients_Query.value(1).toString());
-		Clients[step].sities = Add_Sities(db,st,Clients[step].get_id());
+		Clients[step].sities = Add_Sities(db,st,Clients[step].get_id(), &Clients[step]);
 		Clients[step].set_count(st);
 		for (int z = 0; z < Clients[step].get_count(); z++)
 			Clients[step].addTab(z);
@@ -146,9 +151,8 @@ Client* Add_Clients(QSqlDatabase db, int &cl){
 	return Clients;
 }
 
-bool MainWindow::read_DB(QString Folder){
-	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-	db.setDatabaseName(Folder + "/Sourse/main_db.db");
+bool MainWindow::read_DB(){
+	db.setDatabaseName(path_normal + "/Sourse/main_db.db");
 
 	if (!db.open()) return 0;
 
@@ -162,10 +166,12 @@ bool MainWindow::read_DB(QString Folder){
 	for (int i = 0; i < cl; i++){
 		for (int i2 = 0; i2 < Clients[i].get_count(); i2++){
 			for (int i3 = 0; i3 < Clients[i].sities[i2].get_count(); i3++){
-				for (int i4 = 0; i4 < Clients[i].sities[i2].cards[i3].get_PC(); i4++)
+				for (int i4 = 0; i4 < Clients[i].sities[i2].cards[i3].get_PC(); i4++){
 					connect(Clients[i].sities[i2].cards[i3].buttons[i4],SIGNAL(clicked()), this, SLOT(open_connect()));
-				for (int i4 = 0; i4 < Clients[i].sities[i2].cards[i3].get_WP(); i4++)
+				}
+				for (int i4 = 0; i4 < Clients[i].sities[i2].cards[i3].get_WP(); i4++){
 					connect(Clients[i].sities[i2].cards[i3].buttons[i4 + 2],SIGNAL(clicked()), this, SLOT(open_connect()));
+				}
 			}
 		}
 	}
@@ -203,6 +209,9 @@ void Ask(QString path){
 	delete k;
 }
 
-void MainWindow::on_Need_Change_clicked(){
-	Error();
+void MainWindow::Reload_DB(){  //Potential BIIIIG memory leak
+	while (ui->tabWidget->count())
+		ui->tabWidget->removeTab(0);
+
+	read_DB();
 }

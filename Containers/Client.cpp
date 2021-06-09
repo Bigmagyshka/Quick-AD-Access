@@ -16,3 +16,8 @@ Client::~Client(){
 void Client::addTab(int poz){
 	ui->Sities->addTab(&sities[poz],sities[poz].get_name());
 }
+
+void Client::remove(){
+	for (int i = 0; i < count; i++)
+		ui->Sities->removeTab(i);
+}

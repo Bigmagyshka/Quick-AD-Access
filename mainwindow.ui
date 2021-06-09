@@ -40,16 +40,10 @@
     <property name="title">
      <string>Меню</string>
     </property>
-    <addaction name="Need_Change"/>
    </widget>
    <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="Need_Change">
-   <property name="text">
-    <string>Внести изменения</string>
-   </property>
-  </action>
  </widget>
  <resources/>
  <connections/>

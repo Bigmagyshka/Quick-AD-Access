@@ -16,3 +16,8 @@ void Sity::addCard(int poz){
 	int row = poz / 3, column = poz % 3;
 	ui->Default->addWidget(&cards[poz],row,column);
 }
+
+void Sity::remove(){
+	for (int i = 0; i < count; i++)
+	ui->Default->removeWidget(&cards[i]);
+}

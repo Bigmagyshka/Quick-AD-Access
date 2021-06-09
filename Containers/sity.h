@@ -17,6 +17,7 @@ public:
 	int count;
 
 	void addCard(int poz);
+	void remove();
 	void set_id(int _id){id = _id;}
 	int get_id() {return id;}
 	void set_count(int _count){count = _count;}

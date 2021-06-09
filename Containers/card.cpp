@@ -5,11 +5,6 @@ my_button::my_button(QWidget *parent) :
 	QPushButton(parent){
 }
 
-my_button::my_button(QWidget *parent, long _id) :
-	QPushButton(parent){
-	id = _id;
-}
-
 
 Card::Card(QWidget *parent) :
 	QWidget(parent),
@@ -27,6 +22,7 @@ Card::Card(QWidget *parent) :
 		buttons[i]->hide();
 }
 
+
 int Card::add_PC(long _id, QString _password, QString _name, bool _angry){
 	if (PC > 1) return -1;
 
@@ -35,8 +31,10 @@ int Card::add_PC(long _id, QString _password, QString _name, bool _angry){
 	if (!_name.isEmpty())
 		buttons[PC]->setText(_name);
 	buttons[PC]->set_pas(_password);
-	buttons[PC++]->set_angry(_angry);
-	return (PC-1);
+	buttons[PC]->set_angry(_angry);
+	buttons[PC]->setToolTip(QString::number(buttons[PC]->get_id()));
+	buttons[PC]->setToolTipDuration(5000);
+	return (PC++ -1);
 }
 
 int Card::add_WP(long _id, QString _password, QString _name, bool _angry){
@@ -48,6 +46,8 @@ int Card::add_WP(long _id, QString _password, QString _name, bool _angry){
 		buttons[WP + 1]->setText(_name);
 	buttons[WP + 1]->set_pas(_password);
 	buttons[WP + 1]->set_angry(_angry);
+	buttons[WP + 1]->setToolTip(QString::number(buttons[WP+1]->get_id()));
+	buttons[WP + 1]->setToolTipDuration(5000);
 	return (WP-1);
 }
 
@@ -66,4 +66,5 @@ void Card::set_name(QString _name){
 
 Card::~Card(){
 	delete ui;
-}
+	delete [] buttons;
+ }
