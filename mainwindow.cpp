@@ -14,8 +14,6 @@ MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 	, ui(new Ui::MainWindow){
 	ui->setupUi(this);
-
-	ui->menu->addAction("Reload_DB_2",this,SLOT(Reload_DB()));
 }
 
 MainWindow::MainWindow()
@@ -23,7 +21,6 @@ MainWindow::MainWindow()
 	, ui(new Ui::MainWindow){
 	ui->setupUi(this);
 	db = QSqlDatabase::addDatabase("QSQLITE");
-	ui->menu->addAction("Reload_DB_2",this,SLOT(Reload_DB()));
 }
 
 MainWindow::~MainWindow(){
@@ -214,4 +211,8 @@ void MainWindow::Reload_DB(){  //Potential BIIIIG memory leak
 		ui->tabWidget->removeTab(0);
 
 	read_DB();
+}
+
+void MainWindow::on_Menu_1_triggered(){
+	Reload_DB();
 }

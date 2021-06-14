@@ -40,10 +40,46 @@
     <property name="title">
      <string>Меню</string>
     </property>
+    <addaction name="Menu_1"/>
+    <addaction name="separator"/>
+    <addaction name="action_2"/>
    </widget>
    <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="Menu_1">
+   <property name="text">
+    <string>Перезагрузить БД</string>
+   </property>
+   <property name="autoRepeat">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="action_2">
+   <property name="text">
+    <string>Редактировать БД</string>
+   </property>
+  </action>
+  <action name="action_3">
+   <property name="text">
+    <string>Добавить Город</string>
+   </property>
+  </action>
+  <action name="action_4">
+   <property name="text">
+    <string>Добавить Магазин</string>
+   </property>
+  </action>
+  <action name="action_5">
+   <property name="text">
+    <string>Добавить Подключение</string>
+   </property>
+  </action>
+  <action name="action_6">
+   <property name="text">
+    <string>Добавить Работника</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

@@ -39,6 +39,9 @@ public slots:
 	void open_connect();
 	void Reload_DB();
 
+private slots:
+	void on_Menu_1_triggered();
+
 private:
 	Ui::MainWindow *ui;
 };
