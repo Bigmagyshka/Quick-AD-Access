@@ -60,26 +60,6 @@
     <string>Редактировать БД</string>
    </property>
   </action>
-  <action name="action_3">
-   <property name="text">
-    <string>Добавить Город</string>
-   </property>
-  </action>
-  <action name="action_4">
-   <property name="text">
-    <string>Добавить Магазин</string>
-   </property>
-  </action>
-  <action name="action_5">
-   <property name="text">
-    <string>Добавить Подключение</string>
-   </property>
-  </action>
-  <action name="action_6">
-   <property name="text">
-    <string>Добавить Работника</string>
-   </property>
-  </action>
  </widget>
  <resources/>
  <connections/>

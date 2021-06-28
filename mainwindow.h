@@ -42,6 +42,8 @@ public slots:
 private slots:
 	void on_Menu_1_triggered();
 
+	void on_action_2_triggered();
+
 private:
 	Ui::MainWindow *ui;
 };

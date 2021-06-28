@@ -6,6 +6,7 @@
 #include <QDialog>
 #include "My_error.h"
 #include "ask.h"
+#include "edit_db.h"
 
 void Run(QString path);
 void Ask(QString path);
@@ -214,5 +215,11 @@ void MainWindow::Reload_DB(){  //Potential BIIIIG memory leak
 }
 
 void MainWindow::on_Menu_1_triggered(){
+	Reload_DB();
+}
+
+void MainWindow::on_action_2_triggered(){
+	edit_DB test_2(db);
+	test_2.exec();
 	Reload_DB();
 }

@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "start_window.h"
+#include "edit_db.h"
 #include <QApplication>
 #include <QTimer>
 #include <thread>
@@ -25,8 +26,7 @@ int main(int argc, char *argv[]){
 	QString Folder = argv[0];
 	Folder = Folder.left(Folder.lastIndexOf(QChar('\\')));
 
-	start(Folder);
-
+//	start(Folder);
 
 	MainWindow *w = new MainWindow;
 	w->set_path(Folder);

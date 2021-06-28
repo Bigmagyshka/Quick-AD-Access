@@ -16,72 +16,15 @@
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <widget class="QTabWidget" name="tabWidget">
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
+     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="tab">
-      <attribute name="title">
-       <string>Добавить Клиента</string>
-      </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_2">
-           <item>
-            <layout class="QVBoxLayout" name="verticalLayout_2">
-             <item>
-              <widget class="QLabel" name="label">
-               <property name="text">
-                <string>TextLabel</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QTableWidget" name="tableWidget"/>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="Line" name="line">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QTextBrowser" name="textBrowser">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="html">
-            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Введите имя&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="pushButton">
-           <property name="text">
-            <string>Внести клиента</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
-       <string>Добавить Город</string>
+       <string>Добавить Клиента\Город</string>
       </attribute>
       <layout class="QHBoxLayout" name="horizontalLayout_5">
        <item>
@@ -93,12 +36,23 @@ p, li { white-space: pre-wrap; }
              <item>
               <widget class="QLabel" name="label_3">
                <property name="text">
-                <string>TextLabel</string>
+                <string>Существующие Клиенты</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QTableWidget" name="tableWidget_3"/>
+              <widget class="QTableWidget" name="DB_Clients">
+               <column>
+                <property name="text">
+                 <string>id</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Name</string>
+                </property>
+               </column>
+              </widget>
              </item>
             </layout>
            </item>
@@ -107,12 +61,23 @@ p, li { white-space: pre-wrap; }
              <item>
               <widget class="QLabel" name="label_2">
                <property name="text">
-                <string>TextLabel</string>
+                <string>Существующие Города</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QTableWidget" name="tableWidget_2"/>
+              <widget class="QTableWidget" name="DB_Sities">
+               <column>
+                <property name="text">
+                 <string>id</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Name</string>
+                </property>
+               </column>
+              </widget>
              </item>
             </layout>
            </item>
@@ -133,6 +98,12 @@ p, li { white-space: pre-wrap; }
              <height>40</height>
             </size>
            </property>
+           <property name="focusPolicy">
+            <enum>Qt::ClickFocus</enum>
+           </property>
+           <property name="readOnly">
+            <bool>false</bool>
+           </property>
            <property name="html">
             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -140,14 +111,28 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Введите имя&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
+           <property name="overwriteMode">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_2">
-           <property name="text">
-            <string>Внести клиента</string>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="horizontalLayout_9">
+           <item>
+            <widget class="QPushButton" name="pushButton_5">
+             <property name="text">
+              <string>Добавить Клиента</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_4">
+             <property name="text">
+              <string>Добавить Город</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
         </layout>
        </item>
@@ -167,12 +152,23 @@ p, li { white-space: pre-wrap; }
              <item>
               <widget class="QLabel" name="label_6">
                <property name="text">
-                <string>TextLabel</string>
+                <string>Выберите Клиента</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QTableWidget" name="tableWidget_6"/>
+              <widget class="QTableWidget" name="Choose_Client1">
+               <column>
+                <property name="text">
+                 <string>id</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Name</string>
+                </property>
+               </column>
+              </widget>
              </item>
             </layout>
            </item>
@@ -181,26 +177,48 @@ p, li { white-space: pre-wrap; }
              <item>
               <widget class="QLabel" name="label_4">
                <property name="text">
-                <string>TextLabel</string>
+                <string>Выберите город</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QTableWidget" name="tableWidget_4"/>
+              <widget class="QTableWidget" name="Choose_Sity1">
+               <column>
+                <property name="text">
+                 <string>id</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Name</string>
+                </property>
+               </column>
+              </widget>
              </item>
             </layout>
            </item>
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_8">
              <item>
-              <widget class="QLabel" name="label_5">
+              <widget class="QLabel" name="label_15">
                <property name="text">
-                <string>TextLabel</string>
+                <string>Имеющиеся магазины</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QTableWidget" name="tableWidget_5"/>
+              <widget class="QTableWidget" name="tableWidget">
+               <column>
+                <property name="text">
+                 <string>id</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Name</string>
+                </property>
+               </column>
+              </widget>
              </item>
             </layout>
            </item>
@@ -228,12 +246,15 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Введите имя&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
+           <property name="overwriteMode">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="pushButton_3">
            <property name="text">
-            <string>Внести клиента</string>
+            <string>Внести Магазин</string>
            </property>
           </widget>
          </item>
@@ -245,11 +266,300 @@ p, li { white-space: pre-wrap; }
       <attribute name="title">
        <string>Добавить Подключение</string>
       </attribute>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <layout class="QVBoxLayout" name="verticalLayout_9">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_10">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_11">
+             <item>
+              <widget class="QLabel" name="label_7">
+               <property name="text">
+                <string>Выберите Клиента</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTableWidget" name="tableWidget_7"/>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_12">
+             <item>
+              <widget class="QLabel" name="label_8">
+               <property name="text">
+                <string>Выберите город</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTableWidget" name="tableWidget_8"/>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_13">
+             <item>
+              <widget class="QLabel" name="label_9">
+               <property name="text">
+                <string>Выберите Магазин</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTableWidget" name="tableWidget_9"/>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="Line" name="line_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QGridLayout" name="gridLayout_3">
+           <item row="0" column="2">
+            <widget class="QLabel" name="label_14">
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Вид компьютера</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QTextEdit" name="textEdit">
+             <property name="maximumSize">
+              <size>
+               <width>200</width>
+               <height>23</height>
+              </size>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::ClickFocus</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QLabel" name="label_5">
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Требуется ли оповещать при подключении</string>
+             </property>
+             <property name="textFormat">
+              <enum>Qt::PlainText</enum>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+             <property name="indent">
+              <number>-1</number>
+             </property>
+             <property name="openExternalLinks">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <layout class="QVBoxLayout" name="verticalLayout">
+             <item>
+              <widget class="QRadioButton" name="radioButton">
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>ПК</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="radioButton_2">
+               <property name="maximumSize">
+                <size>
+                 <width>100</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Касса</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="1" column="3">
+            <widget class="QCheckBox" name="checkBox">
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Да, требуется</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="label_13">
+             <property name="maximumSize">
+              <size>
+               <width>200</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Введите пароль</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label">
+             <property name="maximumSize">
+              <size>
+               <width>200</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Введите id</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QTextEdit" name="textEdit_2">
+             <property name="maximumSize">
+              <size>
+               <width>200</width>
+               <height>23</height>
+              </size>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::ClickFocus</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_6">
+           <property name="text">
+            <string>Внести Подключение</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
      </widget>
      <widget class="QWidget" name="tab_5">
       <attribute name="title">
        <string>Добавить Работника</string>
       </attribute>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0">
+        <layout class="QVBoxLayout" name="verticalLayout_14">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_11">
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_15">
+             <item>
+              <widget class="QLabel" name="label_10">
+               <property name="text">
+                <string>Выберите Клиента</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTableWidget" name="tableWidget_10"/>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_16">
+             <item>
+              <widget class="QLabel" name="label_11">
+               <property name="text">
+                <string>Выберите город</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTableWidget" name="tableWidget_11"/>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_17">
+             <item>
+              <widget class="QLabel" name="label_12">
+               <property name="text">
+                <string>TextLabel</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTableWidget" name="tableWidget_12"/>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="Line" name="line_5">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QTextBrowser" name="textBrowser_5">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="html">
+            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Введите имя&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_7">
+           <property name="text">
+            <string>Внести клиента</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
      </widget>
     </widget>
    </item>
