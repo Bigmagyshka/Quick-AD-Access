@@ -20,13 +20,23 @@ public:
 	explicit edit_DB(QWidget *parent = nullptr);
 	edit_DB (QSqlDatabase &db);
 	~edit_DB();
+	void reload_Clients();
+	void reload_Sities();
+
+	int chosen_client, chosen_sity;
 
 private slots:
-	void on_pushButton_5_clicked();
-
-	void on_pushButton_4_clicked();
-
 	void on_DB_Clients_cellChanged(int row, int column);
+
+	void on_Add_Client_clicked();
+
+	void on_Add_Sity_clicked();
+
+	void on_DB_Sities_cellChanged(int row, int column);
+
+	void on_Choose_Client1_cellClicked(int row, int column);
+
+	void on_Choose_Sity1_cellClicked(int row, int column);
 
 private:
 	Ui::edit_DB *ui;

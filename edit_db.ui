@@ -20,7 +20,7 @@
       <enum>Qt::ClickFocus</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
@@ -36,7 +36,7 @@
              <item>
               <widget class="QLabel" name="label_3">
                <property name="text">
-                <string>Существующие Клиенты</string>
+                <string>Существующие Клиенты (доступно для редактирования)</string>
                </property>
               </widget>
              </item>
@@ -61,7 +61,7 @@
              <item>
               <widget class="QLabel" name="label_2">
                <property name="text">
-                <string>Существующие Города</string>
+                <string>Существующие Города (доступно для редактирования)</string>
                </property>
               </widget>
              </item>
@@ -119,14 +119,14 @@ p, li { white-space: pre-wrap; }
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_9">
            <item>
-            <widget class="QPushButton" name="pushButton_5">
+            <widget class="QPushButton" name="Add_Client">
              <property name="text">
               <string>Добавить Клиента</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_4">
+            <widget class="QPushButton" name="Add_Sity">
              <property name="text">
               <string>Добавить Город</string>
              </property>
@@ -202,12 +202,12 @@ p, li { white-space: pre-wrap; }
              <item>
               <widget class="QLabel" name="label_15">
                <property name="text">
-                <string>Имеющиеся магазины</string>
+                <string>Магазины (доступно для редактирования)</string>
                </property>
               </widget>
              </item>
              <item>
-              <widget class="QTableWidget" name="tableWidget">
+              <widget class="QTableWidget" name="Choose_Shop1">
                <column>
                 <property name="text">
                  <string>id</string>
