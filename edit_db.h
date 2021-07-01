@@ -22,6 +22,7 @@ public:
 	~edit_DB();
 	void reload_Clients();
 	void reload_Sities();
+	void reload_Shops_Choose();
 
 	int chosen_client, chosen_sity;
 
@@ -37,6 +38,10 @@ private slots:
 	void on_Choose_Client1_cellClicked(int row, int column);
 
 	void on_Choose_Sity1_cellClicked(int row, int column);
+
+	void on_Choose_Shop1_cellChanged(int row, int column);
+
+	void on_Add_Shop_clicked();
 
 private:
 	Ui::edit_DB *ui;
