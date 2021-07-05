@@ -42,7 +42,8 @@
     </property>
     <addaction name="Menu_1"/>
     <addaction name="separator"/>
-    <addaction name="action_2"/>
+    <addaction name="Edit_DB"/>
+    <addaction name="Delete_From_DB"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -55,9 +56,14 @@
     <bool>false</bool>
    </property>
   </action>
-  <action name="action_2">
+  <action name="Edit_DB">
    <property name="text">
     <string>Редактировать БД</string>
+   </property>
+  </action>
+  <action name="Delete_From_DB">
+   <property name="text">
+    <string>Удалить Данные из БД</string>
    </property>
   </action>
  </widget>

@@ -23,8 +23,12 @@ public:
 	void reload_Clients();
 	void reload_Sities();
 	void reload_Shops_Choose();
+	void reload_Connections();
+	void reload_Workers();
 
-	int chosen_client, chosen_sity;
+	int chosen_client = -1, chosen_sity = -1;
+	int connect_client = -1, connect_sity = -1, connect_shop = -1;
+	int worker_client = -1, worker_sity = -1, worker_shop = -1;
 
 private slots:
 	void on_DB_Clients_cellChanged(int row, int column);
@@ -35,13 +39,33 @@ private slots:
 
 	void on_DB_Sities_cellChanged(int row, int column);
 
-	void on_Choose_Client1_cellClicked(int row, int column);
+	void on_Choose_Client1_cellClicked(int row);
 
-	void on_Choose_Sity1_cellClicked(int row, int column);
+	void on_Choose_Sity1_cellClicked(int row);
 
 	void on_Choose_Shop1_cellChanged(int row, int column);
 
 	void on_Add_Shop_clicked();
+
+	void on_Connect_Client_cellClicked(int row);
+
+	void on_Connect_Sity_cellClicked(int row);
+
+	void on_Connect_Shop_cellClicked(int row);
+
+	void on_Connections_cellChanged(int row, int column);
+
+	void on_Add_Connection_clicked();
+
+	void on_Workers_Client_cellClicked(int row);
+
+	void on_Workers_Sity_cellClicked(int row);
+
+	void on_Workers_Shop_cellClicked(int row);
+
+	void on_Workers_cellChanged(int row, int column);
+
+	void on_Add_Worker_clicked();
 
 private:
 	Ui::edit_DB *ui;

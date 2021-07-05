@@ -13,7 +13,7 @@
 
 void start(QString Folder){
 	start_Window Start;
-	Start.set_pic(Folder, "Version: 0.53c");
+	Start.set_pic(Folder, "Version: 0.54");
 	Start.start(2.5);
 }
 

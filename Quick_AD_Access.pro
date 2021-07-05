@@ -15,6 +15,7 @@ SOURCES += \
     Containers/sity.cpp \
     My_error.cpp \
     ask.cpp \
+    delete_db.cpp \
     edit_db.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     Containers/sity.h \
     My_error.h \
     ask.h \
+    delete_db.h \
     edit_db.h \
     mainwindow.h \
     start_window.h
@@ -36,6 +38,7 @@ FORMS += \
     Containers/sity.ui \
     My_error.ui \
     ask.ui \
+    delete_db.ui \
     edit_db.ui \
     mainwindow.ui \
     start_window.ui

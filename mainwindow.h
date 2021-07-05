@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "Containers/client.h"
+#include "Containers/Client.h"
 
 #include <QSqlDatabase>
 #include <QSqlQuery>
@@ -42,7 +42,9 @@ public slots:
 private slots:
 	void on_Menu_1_triggered();
 
-	void on_action_2_triggered();
+	void on_Edit_DB_triggered();
+
+	void on_Delete_From_DB_triggered();
 
 private:
 	Ui::MainWindow *ui;

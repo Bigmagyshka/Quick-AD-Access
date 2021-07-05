@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>766</width>
-    <height>502</height>
+    <width>888</width>
+    <height>643</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <enum>Qt::ClickFocus</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
@@ -42,6 +42,12 @@
              </item>
              <item>
               <widget class="QTableWidget" name="DB_Clients">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>440</height>
+                </size>
+               </property>
                <column>
                 <property name="text">
                  <string>id</string>
@@ -67,6 +73,12 @@
              </item>
              <item>
               <widget class="QTableWidget" name="DB_Sities">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>440</height>
+                </size>
+               </property>
                <column>
                 <property name="text">
                  <string>id</string>
@@ -84,35 +96,46 @@
           </layout>
          </item>
          <item>
-          <widget class="Line" name="line_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QTextBrowser" name="textBrowser_2">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::ClickFocus</enum>
-           </property>
-           <property name="readOnly">
-            <bool>false</bool>
-           </property>
-           <property name="html">
-            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QLabel" name="label_20">
+             <property name="text">
+              <string>Введите имя клиента или название города и нажмите соответствующую кнопку</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTextBrowser" name="textBrowser_2">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::ClickFocus</enum>
+             </property>
+             <property name="readOnly">
+              <bool>false</bool>
+             </property>
+             <property name="html">
+              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Введите имя&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="overwriteMode">
-            <bool>true</bool>
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="overwriteMode">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="Line" name="line_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
            </property>
           </widget>
          </item>
@@ -158,6 +181,12 @@ p, li { white-space: pre-wrap; }
              </item>
              <item>
               <widget class="QTableWidget" name="Choose_Client1">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>440</height>
+                </size>
+               </property>
                <column>
                 <property name="text">
                  <string>id</string>
@@ -183,6 +212,12 @@ p, li { white-space: pre-wrap; }
              </item>
              <item>
               <widget class="QTableWidget" name="Choose_Sity1">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>440</height>
+                </size>
+               </property>
                <column>
                 <property name="text">
                  <string>id</string>
@@ -213,6 +248,12 @@ p, li { white-space: pre-wrap; }
              </item>
              <item>
               <widget class="QTableWidget" name="Choose_Shop1">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>440</height>
+                </size>
+               </property>
                <column>
                 <property name="text">
                  <string>id</string>
@@ -237,27 +278,38 @@ p, li { white-space: pre-wrap; }
           </widget>
          </item>
          <item>
-          <widget class="QTextBrowser" name="Shop_Input">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="readOnly">
-            <bool>false</bool>
-           </property>
-           <property name="html">
-            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+          <layout class="QVBoxLayout" name="verticalLayout_18">
+           <item>
+            <widget class="QLabel" name="label_21">
+             <property name="text">
+              <string>Введите название</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTextBrowser" name="Shop_Input">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="readOnly">
+              <bool>false</bool>
+             </property>
+             <property name="html">
+              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Введите название&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="overwriteMode">
-            <bool>true</bool>
-           </property>
-          </widget>
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="overwriteMode">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
           <widget class="QPushButton" name="Add_Shop">
@@ -289,7 +341,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QTableWidget" name="tableWidget_7">
+              <widget class="QTableWidget" name="Connect_Client">
                <column>
                 <property name="text">
                  <string>id</string>
@@ -314,7 +366,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QTableWidget" name="tableWidget_8">
+              <widget class="QTableWidget" name="Connect_Sity">
                <column>
                 <property name="text">
                  <string>id</string>
@@ -339,7 +391,7 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QTableWidget" name="tableWidget_9">
+              <widget class="QTableWidget" name="Connect_Shop">
                <column>
                 <property name="text">
                  <string>id</string>
@@ -357,7 +409,13 @@ p, li { white-space: pre-wrap; }
           </layout>
          </item>
          <item>
-          <widget class="QTableWidget" name="tableWidget">
+          <widget class="QTableWidget" name="Connections">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>200</height>
+            </size>
+           </property>
            <column>
             <property name="text">
              <string>Is_PC</string>
@@ -394,12 +452,15 @@ p, li { white-space: pre-wrap; }
          </item>
          <item>
           <layout class="QGridLayout" name="gridLayout_3">
-           <item row="0" column="2">
+           <property name="verticalSpacing">
+            <number>6</number>
+           </property>
+           <item row="0" column="3">
             <widget class="QLabel" name="label_14">
              <property name="maximumSize">
               <size>
                <width>100</width>
-               <height>16777215</height>
+               <height>50</height>
               </size>
              </property>
              <property name="text">
@@ -407,25 +468,44 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="1" column="0">
-            <widget class="QTextEdit" name="textEdit">
+           <item row="1" column="1">
+            <widget class="QTextEdit" name="Connect_id">
              <property name="maximumSize">
               <size>
-               <width>200</width>
+               <width>190</width>
                <height>23</height>
               </size>
              </property>
              <property name="focusPolicy">
               <enum>Qt::ClickFocus</enum>
              </property>
+             <property name="verticalScrollBarPolicy">
+              <enum>Qt::ScrollBarAlwaysOff</enum>
+             </property>
+             <property name="horizontalScrollBarPolicy">
+              <enum>Qt::ScrollBarAlwaysOff</enum>
+             </property>
+             <property name="readOnly">
+              <bool>false</bool>
+             </property>
+             <property name="overwriteMode">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
-           <item row="0" column="3">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_16">
+             <property name="text">
+              <string>Имя Компьютера</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="4">
             <widget class="QLabel" name="label_5">
              <property name="maximumSize">
               <size>
-               <width>100</width>
-               <height>16777215</height>
+               <width>150</width>
+               <height>50</height>
               </size>
              </property>
              <property name="text">
@@ -448,27 +528,30 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="1" column="2">
+           <item row="1" column="3">
             <layout class="QVBoxLayout" name="verticalLayout">
              <item>
-              <widget class="QRadioButton" name="radioButton">
+              <widget class="QRadioButton" name="Connect_PC">
                <property name="maximumSize">
                 <size>
                  <width>100</width>
-                 <height>16777215</height>
+                 <height>20</height>
                 </size>
                </property>
                <property name="text">
                 <string>ПК</string>
                </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
               </widget>
              </item>
              <item>
-              <widget class="QRadioButton" name="radioButton_2">
+              <widget class="QRadioButton" name="Connect_Sell">
                <property name="maximumSize">
                 <size>
                  <width>100</width>
-                 <height>16777215</height>
+                 <height>20</height>
                 </size>
                </property>
                <property name="text">
@@ -478,25 +561,47 @@ p, li { white-space: pre-wrap; }
              </item>
             </layout>
            </item>
-           <item row="1" column="3">
-            <widget class="QCheckBox" name="checkBox">
+           <item row="1" column="4">
+            <widget class="QCheckBox" name="Connect_Angry">
              <property name="maximumSize">
               <size>
                <width>100</width>
-               <height>16777215</height>
+               <height>50</height>
               </size>
              </property>
              <property name="text">
               <string>Да, требуется</string>
              </property>
+             <property name="checked">
+              <bool>false</bool>
+             </property>
             </widget>
            </item>
-           <item row="0" column="1">
+           <item row="1" column="0">
+            <widget class="QTextEdit" name="Connect_Name">
+             <property name="maximumSize">
+              <size>
+               <width>190</width>
+               <height>23</height>
+              </size>
+             </property>
+             <property name="verticalScrollBarPolicy">
+              <enum>Qt::ScrollBarAlwaysOff</enum>
+             </property>
+             <property name="horizontalScrollBarPolicy">
+              <enum>Qt::ScrollBarAlwaysOff</enum>
+             </property>
+             <property name="overwriteMode">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
             <widget class="QLabel" name="label_13">
              <property name="maximumSize">
               <size>
                <width>200</width>
-               <height>16777215</height>
+               <height>50</height>
               </size>
              </property>
              <property name="text">
@@ -504,36 +609,45 @@ p, li { white-space: pre-wrap; }
              </property>
             </widget>
            </item>
-           <item row="0" column="0">
+           <item row="0" column="1">
             <widget class="QLabel" name="label">
              <property name="maximumSize">
               <size>
                <width>200</width>
-               <height>16777215</height>
+               <height>50</height>
               </size>
              </property>
              <property name="text">
-              <string>Введите id</string>
+              <string>Введите id AnyDesk</string>
              </property>
             </widget>
            </item>
-           <item row="1" column="1">
-            <widget class="QTextEdit" name="textEdit_2">
+           <item row="1" column="2">
+            <widget class="QTextEdit" name="Connect_Password">
              <property name="maximumSize">
               <size>
-               <width>200</width>
+               <width>190</width>
                <height>23</height>
               </size>
              </property>
              <property name="focusPolicy">
               <enum>Qt::ClickFocus</enum>
              </property>
+             <property name="verticalScrollBarPolicy">
+              <enum>Qt::ScrollBarAlwaysOff</enum>
+             </property>
+             <property name="horizontalScrollBarPolicy">
+              <enum>Qt::ScrollBarAlwaysOff</enum>
+             </property>
+             <property name="overwriteMode">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
           </layout>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_6">
+          <widget class="QPushButton" name="Add_Connection">
            <property name="text">
             <string>Внести Подключение</string>
            </property>
@@ -562,7 +676,18 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QTableWidget" name="tableWidget_10"/>
+              <widget class="QTableWidget" name="Workers_Client">
+               <column>
+                <property name="text">
+                 <string>id</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Name</string>
+                </property>
+               </column>
+              </widget>
              </item>
             </layout>
            </item>
@@ -576,7 +701,18 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QTableWidget" name="tableWidget_11"/>
+              <widget class="QTableWidget" name="Workers_Sity">
+               <column>
+                <property name="text">
+                 <string>id</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Name</string>
+                </property>
+               </column>
+              </widget>
              </item>
             </layout>
            </item>
@@ -590,14 +726,31 @@ p, li { white-space: pre-wrap; }
               </widget>
              </item>
              <item>
-              <widget class="QTableWidget" name="tableWidget_12"/>
+              <widget class="QTableWidget" name="Workers_Shop">
+               <column>
+                <property name="text">
+                 <string>id</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Name</string>
+                </property>
+               </column>
+              </widget>
              </item>
             </layout>
            </item>
           </layout>
          </item>
          <item>
-          <widget class="QTableWidget" name="tableWidget_2">
+          <widget class="QTableWidget" name="Workers">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>200</height>
+            </size>
+           </property>
            <column>
             <property name="text">
              <string>Name</string>
@@ -623,26 +776,82 @@ p, li { white-space: pre-wrap; }
           </widget>
          </item>
          <item>
-          <widget class="QTextBrowser" name="textBrowser_5">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>40</height>
-            </size>
-           </property>
-           <property name="html">
-            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Введите имя&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-          </widget>
+          <layout class="QGridLayout" name="gridLayout_4">
+           <item row="1" column="1">
+            <widget class="QTextEdit" name="Workers_Number">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>23</height>
+              </size>
+             </property>
+             <property name="verticalScrollBarPolicy">
+              <enum>Qt::ScrollBarAlwaysOff</enum>
+             </property>
+             <property name="overwriteMode">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QTextEdit" name="Workers_Name">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>23</height>
+              </size>
+             </property>
+             <property name="verticalScrollBarPolicy">
+              <enum>Qt::ScrollBarAlwaysOff</enum>
+             </property>
+             <property name="overwriteMode">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLabel" name="label_19">
+             <property name="text">
+              <string>Введите Должность</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="label_18">
+             <property name="text">
+              <string>Введите Телефон</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_17">
+             <property name="text">
+              <string>Введите имя</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QTextEdit" name="Workers_Position">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>23</height>
+              </size>
+             </property>
+             <property name="verticalScrollBarPolicy">
+              <enum>Qt::ScrollBarAlwaysOff</enum>
+             </property>
+             <property name="overwriteMode">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_7">
+          <widget class="QPushButton" name="Add_Worker">
            <property name="text">
-            <string>Внести клиента</string>
+            <string>Внести Работника</string>
            </property>
           </widget>
          </item>

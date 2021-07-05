@@ -13,6 +13,7 @@ class My_Error : public QDialog
 
 public:
 	explicit My_Error(QWidget *parent = nullptr);
+	explicit My_Error(QString text);
 	~My_Error();
 
 private slots:

@@ -7,6 +7,7 @@
 #include "My_error.h"
 #include "ask.h"
 #include "edit_db.h"
+#include "delete_db.h"
 
 void Run(QString path);
 void Ask(QString path);
@@ -191,12 +192,6 @@ void Run(QString path){
 	thr2.detach();
 }
 
-int Error(){
-	My_Error w;
-	w.show();
-	return w.exec();
-}
-
 void Ask(QString path){
 	int *k = new int(0);
 	ask w;
@@ -218,8 +213,14 @@ void MainWindow::on_Menu_1_triggered(){
 	Reload_DB();
 }
 
-void MainWindow::on_action_2_triggered(){
-	edit_DB test_2(db);
-	test_2.exec();
+void MainWindow::on_Edit_DB_triggered(){
+	edit_DB Edit_DB(db);
+	Edit_DB.exec();
+	Reload_DB();
+}
+
+void MainWindow::on_Delete_From_DB_triggered(){
+	delete_db Delete_DB(db);
+	Delete_DB.exec();
 	Reload_DB();
 }
