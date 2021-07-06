@@ -62,6 +62,11 @@
            <string>Name</string>
           </property>
          </column>
+         <column>
+          <property name="text">
+           <string>№</string>
+          </property>
+         </column>
         </widget>
        </item>
       </layout>
@@ -127,7 +132,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QTableWidget" name="tableWidget">
+      <widget class="QTableWidget" name="Connections">
        <column>
         <property name="text">
          <string>Is_PC</string>

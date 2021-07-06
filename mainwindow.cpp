@@ -153,7 +153,11 @@ Client* Add_Clients(QSqlDatabase db, int &cl){
 bool MainWindow::read_DB(){
 	db.setDatabaseName(path_normal + "/Sourse/main_db.db");
 
-	if (!db.open()) return 0;
+	if (!db.open()) {
+		My_Error error("DB is offline");
+		error.exec();
+		return 0;
+	}
 
 	int cl;
 	Clients = Add_Clients(db, cl);
