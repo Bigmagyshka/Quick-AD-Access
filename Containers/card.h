@@ -12,6 +12,7 @@ class my_button : public QPushButton{
 
 public:
 	explicit my_button(QWidget *parent);
+	explicit my_button();
 	void set_id(long z){id = z;}
 	long get_id(){return id;}
 	void set_pas(QString _pas){password = _pas;}
@@ -32,17 +33,16 @@ class Card : public QWidget
 	Q_OBJECT
 	QString name;
 	int id;
-	int PC = 0, WP = 0;
+	int count_buttons = 0, max_count = 6;
+	bool error = false;
 
 public:
-	my_button **buttons;
+	my_button *buttons;
 
 	explicit Card(QWidget *parent = nullptr);
-	int add_PC(long _id, QString _password, QString _name, bool _angry);
-	int add_WP(long _id, QString _password, QString _name, bool _angry);
+	void add_button(long _id, QString _password, QString _name, bool _angry);
 	int add_Worker(QString Name, QString Position, QString Number);
-	int get_PC(){return PC;};
-	int get_WP(){return WP;};
+	int get_count(){return count_buttons;};
 	void set_name(QString _name);
 	QString get_name() {return name;}
 	void set_id(int _id){id = _id;}

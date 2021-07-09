@@ -1,13 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "QListWidgetItem"
-#include "windows.h"
-#include <thread>
-#include <QDialog>
-#include "My_error.h"
-#include "ask.h"
-#include "edit_db.h"
-#include "delete_db.h"
+
 
 void Run(QString path);
 void Ask(QString path);
@@ -29,24 +22,23 @@ MainWindow::~MainWindow(){
 	delete ui;
 }
 
-void MainWindow::open_connect(){
-	my_button *button = (my_button*) sender();
-	if (button->get_angry())
-		Ask ("echo " + button->get_pas() + " | " + path + QString::number(button->get_id()) + + " --with-password");
-	else
-		Run ("echo " + button->get_pas() + " | " + path + QString::number(button->get_id()) + + " --with-password");
+//Base Functions
+void MainWindow::Reload_DB(){  //Potential BIIIIG memory leak
+	while (ui->tabWidget->count())
+		ui->tabWidget->removeTab(0);
+
+	read_DB();
 }
 
+
+// Add main data from DB
 void addButtons(int shop_id, QSqlDatabase db, Card &cur_card){
 	QSqlQuery Query(db);
 
-	Query.exec("SELECT * FROM Work_Places WHERE Work_Places.Shop_id = " + QString::number(shop_id));
+	Query.exec("SELECT * FROM Work_Places WHERE Work_Places.Shop_id = " + QString::number(shop_id) + " ORDER BY Work_Places.Is_PC DESC");
 
 	while (Query.next()){
-		if (Query.value(1).toInt())
-			cur_card.add_PC(Query.value(2).toLongLong(),Query.value(3).toString(),Query.value(4).toString(), Query.value(5).toBool());
-		else
-			cur_card.add_WP(Query.value(2).toLongLong(),Query.value(3).toString(),Query.value(4).toString(), Query.value(5).toBool());
+			cur_card.add_button(Query.value(2).toLongLong(),Query.value(3).toString(),Query.value(4).toString(), Query.value(5).toBool());
 	}
 }
 
@@ -164,16 +156,11 @@ bool MainWindow::read_DB(){
 	for (int i = 0; i < cl; i++)
 		ui->tabWidget->addTab(&Clients[i],Clients[i].get_name());
 
-	db.close();
-
 	for (int i = 0; i < cl; i++){
 		for (int i2 = 0; i2 < Clients[i].get_count(); i2++){
 			for (int i3 = 0; i3 < Clients[i].sities[i2].get_count(); i3++){
-				for (int i4 = 0; i4 < Clients[i].sities[i2].cards[i3].get_PC(); i4++){
-					connect(Clients[i].sities[i2].cards[i3].buttons[i4],SIGNAL(clicked()), this, SLOT(open_connect()));
-				}
-				for (int i4 = 0; i4 < Clients[i].sities[i2].cards[i3].get_WP(); i4++){
-					connect(Clients[i].sities[i2].cards[i3].buttons[i4 + 2],SIGNAL(clicked()), this, SLOT(open_connect()));
+				for (int i4 = 0; i4 < Clients[i].sities[i2].cards[i3].get_count(); i4++){
+					connect(&(Clients[i].sities[i2].cards[i3].buttons[i4]),SIGNAL(clicked()), this, SLOT(open_connect()));
 				}
 			}
 		}
@@ -182,6 +169,8 @@ bool MainWindow::read_DB(){
 	return 1;
 }
 
+
+//Work with Connections
 void kill(){
 	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
 	system("taskkill /IM cmd.exe");
@@ -197,22 +186,22 @@ void Run(QString path){
 }
 
 void Ask(QString path){
-	int *k = new int(0);
-	ask w;
-	w.set_f(k);
-	w.show();
-	w.exec();
-	if (*k) Run(path);
-	delete k;
+	bool k;
+	ask Ask(k,"Управляющий требует, чтобы перед подключением к кассе ему позвонили !!!");
+	Ask.exec();
+	if (k) Run(path);
 }
 
-void MainWindow::Reload_DB(){  //Potential BIIIIG memory leak
-	while (ui->tabWidget->count())
-		ui->tabWidget->removeTab(0);
-
-	read_DB();
+void MainWindow::open_connect(){
+	my_button *button = (my_button*) sender();
+	if (button->get_angry())
+		Ask ("echo " + button->get_pas() + " | " + path + QString::number(button->get_id()) + + " --with-password");
+	else
+		Run ("echo " + button->get_pas() + " | " + path + QString::number(button->get_id()) + + " --with-password");
 }
 
+
+//Menu Buttons
 void MainWindow::on_Menu_1_triggered(){
 	Reload_DB();
 }

@@ -2,6 +2,7 @@
 #define START_WINDOW_H
 
 #include <QDialog>
+#include <QTimer>
 
 namespace Ui {
 class start_Window;

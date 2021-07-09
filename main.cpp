@@ -5,18 +5,6 @@
 #include <QTimer>
 #include <thread>
 
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QSqlError>
-#include <QSqlDriver>
-
-void start(QString Folder){
-	start_Window Start;
-	Start.set_pic(Folder, "Version: 0.6");
-	Start.start(2.5);
-}
-
 
 int main(int argc, char *argv[]){
 //	setlocale(LC_ALL, "Russian");
@@ -26,7 +14,9 @@ int main(int argc, char *argv[]){
 	QString Folder = argv[0];
 	Folder = Folder.left(Folder.lastIndexOf(QChar('\\')));
 
-//	start(Folder);
+	start_Window Start;
+	Start.set_pic(Folder, "Version: 0.7");
+	Start.start(2.5);
 
 	MainWindow *w = new MainWindow;
 	w->set_path(Folder);

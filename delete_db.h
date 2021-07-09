@@ -8,6 +8,10 @@
 #include <QSqlError>
 #include <QSqlDriver>
 
+#include "ui_delete_db.h"
+#include "My_error.h"
+#include "ask.h"
+
 namespace Ui {
 class delete_db;
 }

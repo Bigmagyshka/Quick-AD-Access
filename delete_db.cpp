@@ -1,6 +1,12 @@
 #include "delete_db.h"
-#include "ui_delete_db.h"
-#include "My_error.h"
+
+
+bool Ask_me(QString Question){
+	bool flag;
+	ask Ask(flag,Question,"Нет","Да");
+	Ask.exec();
+	return flag;
+}
 
 delete_db::delete_db(QWidget *parent) : QDialog(parent), ui(new Ui::delete_db){
 	ui->setupUi(this);
@@ -27,41 +33,45 @@ delete_db::~delete_db(){
 	delete ui;
 }
 
+//Base Functions
 void delete_db::reload_Clients(){
 	QSqlQuery Query(db);
-	QString Name, id;
-
 	ui->Clients->setRowCount(0);
 
 	Query.exec("SELECT * FROM Clients ORDER BY Clients.Name");
 	while (Query.next()){
-		id = Query.value(0).toString();
-		Name = Query.value(1).toString();
-
 		ui->Clients->insertRow(ui->Clients->rowCount());
-		ui->Clients->setItem(ui->Clients->rowCount()-1, 0, new QTableWidgetItem(id));
-		ui->Clients->setItem(ui->Clients->rowCount()-1, 1, new QTableWidgetItem(Name));
+		ui->Clients->setItem(ui->Clients->rowCount()-1, 0, new QTableWidgetItem(Query.value(0).toString()));
+		ui->Clients->setItem(ui->Clients->rowCount()-1, 1, new QTableWidgetItem(Query.value(1).toString()));
 
 	}
 }
 
 void delete_db::reload_Sities(){
 	QSqlQuery Query(db);
-	QString Name, id;
+	Query.exec("With my_count (ID , NAME , Shop_count) "
+				"As ("
+				"SELECT DISTINCT Sities.id, Sities.Name, sum(1) OVER(PARTITION BY Sities.Name) AS Shop_count FROM Shops "
+				"JOIN Sities on Sities.id = Shops.Sity_id "
+				"WHERE Shops.Owner_id = " + QString::number(Client)  +
+				" ORDER BY Sities.Name"
+				") "
+				"SELECT DISTINCT ID, NAME, sum(Shop_count) OVER(PARTITION BY ID) AS № From ("
+				"SELECT ID, NAME, Shop_count From my_count "
+				"UNION SELECT Sities.id, Sities.Name, 0 AS Shop_count From Sities "
+				") "
+				"ORDER BY NAME"
+				);
 	ui->Sities->setRowCount(0);
-	Query.exec("SELECT * FROM Sities ORDER BY Sities.Name");
 	while (Query.next()){
-		id = Query.value(0).toString();
-		Name = Query.value(1).toString();
-
 		ui->Sities->insertRow(ui->Sities->rowCount());
-		ui->Sities->setItem(ui->Sities->rowCount()-1, 0, new QTableWidgetItem(id));
-		ui->Sities->setItem(ui->Sities->rowCount()-1, 1, new QTableWidgetItem(Name));
+		ui->Sities->setItem(ui->Sities->rowCount()-1, 0, new QTableWidgetItem(Query.value(0).toString()));
+		ui->Sities->setItem(ui->Sities->rowCount()-1, 1, new QTableWidgetItem(Query.value(1).toString()));
+		ui->Sities->setItem(ui->Sities->rowCount()-1, 2, new QTableWidgetItem(Query.value(2).toString()));
 	}
 }
 
 void delete_db::reload_Shops(){
-	QString id, Name;
 	QSqlQuery Query(db);
 
 	ui->Shops->setRowCount(0);
@@ -76,54 +86,36 @@ void delete_db::reload_Shops(){
 						" AND t3.id = " + QString::number(Sity) + " ORDER BY t1.Address");
 
 	while (Query.next()){
-		id = Query.value(0).toString();
-		Name = Query.value(1).toString();
-
 		ui->Shops->insertRow(ui->Shops->rowCount());
-		ui->Shops->setItem(ui->Shops->rowCount()-1, 0, new QTableWidgetItem(id));
-		ui->Shops->setItem(ui->Shops->rowCount()-1, 1, new QTableWidgetItem(Name));
+		ui->Shops->setItem(ui->Shops->rowCount()-1, 0, new QTableWidgetItem(Query.value(0).toString()));
+		ui->Shops->setItem(ui->Shops->rowCount()-1, 1, new QTableWidgetItem(Query.value(1).toString()));
 	}
 }
 
 void delete_db::reload_Connections(){
 	QSqlQuery Query(db);
-	QString Connection, Password, Name;
-	bool Is_PC, Is_Angry;
-
 	Query.exec("SELECT * FROM Work_Places WHERE Work_Places.Shop_id = " + QString::number(Shop));
 
 	ui->Connections->setRowCount(0);
 	while (Query.next()){
-		Is_PC = Query.value(1).toBool();
-		Connection = Query.value(2).toString();
-		Password = Query.value(3).toString();
-		Name = Query.value(4).toString();
-		Is_Angry = Query.value(5).toBool();
-
 		ui->Connections->insertRow(ui->Connections->rowCount());
-		ui->Connections->setItem(ui->Connections->rowCount()-1, 0, new QTableWidgetItem(Is_PC?"1":"0"));
-		ui->Connections->setItem(ui->Connections->rowCount()-1, 1, new QTableWidgetItem(Connection));
-		ui->Connections->setItem(ui->Connections->rowCount()-1, 2, new QTableWidgetItem(Password));
-		ui->Connections->setItem(ui->Connections->rowCount()-1, 3, new QTableWidgetItem(Name));
-		ui->Connections->setItem(ui->Connections->rowCount()-1, 4, new QTableWidgetItem(Is_Angry?"1":"0"));
+		ui->Connections->setItem(ui->Connections->rowCount()-1, 0, new QTableWidgetItem(Query.value(1).toBool()?"1":"0"));
+		ui->Connections->setItem(ui->Connections->rowCount()-1, 1, new QTableWidgetItem(Query.value(2).toString()));
+		ui->Connections->setItem(ui->Connections->rowCount()-1, 2, new QTableWidgetItem(Query.value(3).toString()));
+		ui->Connections->setItem(ui->Connections->rowCount()-1, 3, new QTableWidgetItem(Query.value(4).toString()));
+		ui->Connections->setItem(ui->Connections->rowCount()-1, 4, new QTableWidgetItem(Query.value(5).toBool()?"1":"0"));
 	}
 }
 
 void delete_db::reload_Workers(){
 	QSqlQuery Query(db);
-	QString Name, Number, Position;
-
 	Query.exec("SELECT * FROM Workers WHERE Workers.Shop_id = " + QString::number(Shop));
 	ui->Workers->setRowCount(0);
 	while (Query.next()){
-		Name = Query.value(1).toString();
-		Number = Query.value(2).toString();
-		Position = Query.value(3).toString();
-
 		ui->Workers->insertRow(ui->Workers->rowCount());
-		ui->Workers->setItem(ui->Workers->rowCount()-1, 0, new QTableWidgetItem(Name));
-		ui->Workers->setItem(ui->Workers->rowCount()-1, 1, new QTableWidgetItem(Number));
-		ui->Workers->setItem(ui->Workers->rowCount()-1, 2, new QTableWidgetItem(Position));
+		ui->Workers->setItem(ui->Workers->rowCount()-1, 0, new QTableWidgetItem(Query.value(1).toString()));
+		ui->Workers->setItem(ui->Workers->rowCount()-1, 1, new QTableWidgetItem(Query.value(2).toString()));
+		ui->Workers->setItem(ui->Workers->rowCount()-1, 2, new QTableWidgetItem(Query.value(3).toString()));
 	}
 }
 
@@ -134,14 +126,11 @@ void delete_db::delete_Shop(int a){
 	Query.exec("DELETE FROM Shops WHERE Shops.id = " + QString::number(a));
 }
 
+
+//Tables Clicks
 void delete_db::on_Clients_cellClicked(int row){
-
-	QSqlQuery Query(db),count(db);
-	QString Name, id, id_sity;
-
 	QTableWidgetItem *item = ui->Clients->item(row,0);
-	if (NULL != item) id = item->text();
-	Client = id.toInt();
+	if (NULL != item) Client = item->text().toInt();
 	Sity = -1;
 	Shop = -1;
 	Connection = "";
@@ -151,32 +140,7 @@ void delete_db::on_Clients_cellClicked(int row){
 	ui->Connections->setRowCount(0);
 	ui->Workers->setRowCount(0);
 
-	Query.exec("SELECT DISTINCT t1.id FROM Shops as t2 "
-						"JOIN Sities as t1 on t1.id = t2.Sity_id "
-						"WHERE t2.Owner_id = " + id + " ORDER BY t1.Name");
-
-	for (int i = 0; i < ui->Sities->rowCount(); i++) {
-		ui->Sities->setItem(i,2, new QTableWidgetItem(0));
-	}
-
-	if (!Query.next()) return;
-
-	for (int i = 0; (i < ui->Sities->rowCount()); i++){
-		item = ui->Sities->item(i,0);
-		id_sity = item->text();
-
-		if (id_sity == Query.value(0).toString()){
-			count.exec("SELECT count (t1.Address) "
-								"FROM Shops as t1 "
-								"JOIN Clients as t2 on t1.Owner_id = t2.id "
-								"JOIN Sities as t3 on t1.Sity_id = t3.id "
-								" Where t2.id = " + id +
-								" AND t3.id = " + id_sity);
-			count.next();
-			ui->Sities->setItem(i,2, new QTableWidgetItem(count.value(0).toString()));
-			if (!Query.next()) return;
-		}
-	}
+	reload_Sities();
 }
 
 void delete_db::on_Sities_cellClicked(int row){
@@ -210,9 +174,16 @@ void delete_db::on_Connections_cellClicked(int row){
 	if (NULL != item) Connection = item->text();
 }
 
+
+//Buttons
 void delete_db::on_Del_Connection_clicked(){
 	try {
 		if (Connection.isEmpty()) throw "Connection not selected";
+
+		if (!Ask_me("Это действие удалит Подключение, продолжить?")) {
+			throw 1;
+		}
+
 		QSqlQuery Query(db);
 		Query.exec("DELETE FROM Work_Places WHERE Work_Places.Connection = '" + Connection + "'");
 		reload_Connections();
@@ -220,11 +191,19 @@ void delete_db::on_Del_Connection_clicked(){
 		My_Error error(a);
 		error.exec();
 	}
+	catch(int k){
+	}
+
 }
 
 void delete_db::on_Del_Worker_clicked(){
 	try {
 		if (Number.isEmpty()) throw "Worker not selected";
+
+		if (!Ask_me("Это действие удалит Работника, продолжить?")) {
+			throw 1;
+		}
+
 		QSqlQuery Query(db);
 		Query.exec("DELETE FROM Workers WHERE Workers.Number = '" + Number + "'");
 		reload_Workers();
@@ -232,11 +211,18 @@ void delete_db::on_Del_Worker_clicked(){
 		My_Error error(a);
 		error.exec();
 	}
+	catch(int k){
+	}
 }
 
 void delete_db::on_Del_Shop_clicked(){
 	try {
 		if (Shop == -1) throw "Shop not selected";
+
+		if (!Ask_me("Это действие удалит Магазин, все подключения и работников, продолжить?")) {
+			throw 1;
+		}
+
 		delete_Shop(Shop);
 		Shop = -1;
 		ui->Workers->setRowCount(0);
@@ -246,11 +232,18 @@ void delete_db::on_Del_Shop_clicked(){
 		My_Error error(a);
 		error.exec();
 	}
+	catch(int k){
+	}
 }
 
 void delete_db::on_Del_Sity_clicked(){
 	try {
 		if (Sity == -1) throw "Sity not selected";
+
+		if (!Ask_me("Это действие удалит ВСЕ магазины, подключения и работников в этом городе, продолжить?")) {
+			throw 1;
+		}
+
 		QSqlQuery Query(db);
 		Query.exec("SELECT DISTINCT t2.id FROM Shops as t2 "
 							"JOIN Sities as t1 on t1.id = t2.Sity_id "
@@ -272,11 +265,18 @@ void delete_db::on_Del_Sity_clicked(){
 		My_Error error(a);
 		error.exec();
 	}
+	catch(int k){
+	}
 }
 
 void delete_db::on_Del_Client_clicked(){
 	try {
 		if (Client == -1) throw "Client not selected";
+
+		if (!Ask_me("Это действие удалит ВСЕ магазины, подключения и работников этого клиента, продолжить?")) {
+			throw 1;
+		}
+
 		QSqlQuery Query(db);
 		Query.exec("SELECT DISTINCT t2.id FROM Shops as t2 "
 							"JOIN Sities as t1 on t1.id = t2.Sity_id "
@@ -298,5 +298,7 @@ void delete_db::on_Del_Client_clicked(){
 	}  catch (const char* a) {
 		My_Error error(a);
 		error.exec();
+	}
+	catch(int k){
 	}
 }

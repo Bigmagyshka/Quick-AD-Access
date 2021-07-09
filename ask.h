@@ -12,9 +12,11 @@ class ask : public QDialog
 	Q_OBJECT
 
 public:
-	int *flag;
+	bool *flag;
 	explicit ask(QWidget *parent = nullptr);
-	void set_f(int *k){flag = k;}
+	ask(bool &_flag, QString Question);
+	ask(bool &_flag, QString Question, QString Answer_1, QString Answer_2);
+	void set_f(bool &k){flag = &k;}
 	~ask();
 
 private slots:

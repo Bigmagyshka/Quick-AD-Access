@@ -8,6 +8,8 @@
 #include <QSqlError>
 #include <QSqlDriver>
 
+#include "My_error.h"
+
 namespace Ui {
 class edit_DB;
 }
@@ -21,7 +23,7 @@ public:
 	edit_DB (QSqlDatabase &db);
 	~edit_DB();
 	void reload_Clients();
-	void reload_Sities();
+	void reload_Sities(int tab);
 	void reload_Shops_Choose();
 	void reload_Connections();
 	void reload_Workers();

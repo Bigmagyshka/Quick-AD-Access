@@ -20,7 +20,7 @@
       <enum>Qt::ClickFocus</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
@@ -377,6 +377,11 @@ p, li { white-space: pre-wrap; }
                  <string>Name</string>
                 </property>
                </column>
+               <column>
+                <property name="text">
+                 <string>№</string>
+                </property>
+               </column>
               </widget>
              </item>
             </layout>
@@ -710,6 +715,11 @@ p, li { white-space: pre-wrap; }
                <column>
                 <property name="text">
                  <string>Name</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>№</string>
                 </property>
                </column>
               </widget>

@@ -2,13 +2,19 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "Containers/Client.h"
-
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QSqlError>
 #include <QSqlDriver>
+#include <thread>
+
+#include "My_error.h"
+#include "ask.h"
+#include "edit_db.h"
+#include "delete_db.h"
+#include "Containers/Client.h"
+#include "windows.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

@@ -1,6 +1,5 @@
 #include "start_window.h"
 #include "ui_start_window.h"
-#include <QTimer>
 
 start_Window::start_Window(QWidget *parent) :
 	QDialog(parent),
