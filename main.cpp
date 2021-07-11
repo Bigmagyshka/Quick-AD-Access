@@ -15,7 +15,7 @@ int main(int argc, char *argv[]){
 	Folder = Folder.left(Folder.lastIndexOf(QChar('\\')));
 
 	start_Window Start;
-	Start.set_pic(Folder, "Version: 0.7");
+	Start.set_pic(Folder, "Version: 0.71");
 	Start.start(2.5);
 
 	MainWindow *w = new MainWindow;

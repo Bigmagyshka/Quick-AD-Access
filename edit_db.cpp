@@ -5,16 +5,14 @@
 #define FLAG_ON flag = true;
 #define FLAG_OFF flag = false;
 
-edit_DB::edit_DB(QWidget *parent) :
-	QDialog(parent),
-	ui(new Ui::edit_DB)
+edit_DB::edit_DB(QWidget *parent) : QDialog(parent), ui(new Ui::edit_DB)
 {
 	ui->setupUi(this);
 	setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
 	setModal(true);
 }
 
-edit_DB::edit_DB(QSqlDatabase &db) : QDialog(), ui(new Ui::edit_DB){
+edit_DB::edit_DB(QSqlDatabase &db) : QDialog(nullptr), ui(new Ui::edit_DB){
 	ui->setupUi(this);
 	setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
 	setModal(true);
@@ -215,31 +213,45 @@ void edit_DB::reload_Sities(int tab){
 	FLAG_ON;
 }
 
+
 //Buttons
 void edit_DB::on_Add_Client_clicked(){
-	QString text = ui->textBrowser_2->toPlainText();
-	if (!(text == "Введите имя" || text == "")){
+	try {
+		QString text = ui->textBrowser_2->toPlainText();
+		if (!(text == "Введите имя" || text == ""))throw "Поле не изменено или пустое!";
 		QSqlQuery Query(db);
 		Query.exec("SELECT Clients.id FROM Clients ORDER BY Clients.id DESC limit 1 ");
 		Query.next();
 		Query.exec("INSERT INTO Clients VALUES (" + QString::number(Query.value(0).toInt() + 1) + ",\"" + text + "\")");
+		if (Query.lastError().text() != "") throw Query.lastError().text();
 		reload_Clients();
-	}else {
-		My_Error error("Поле не изменено или пустое!");
+	}  catch (const char* a) {
+		My_Error error(a);
+		error.exec();
+	}
+	catch (QString a) {
+		My_Error error(a);
 		error.exec();
 	}
 }
 
 void edit_DB::on_Add_Sity_clicked(){
-	QString text = ui->textBrowser_2->toPlainText();
-	if (!(text == "Введите имя" || text == "")){
+	try {
+		QString text = ui->textBrowser_2->toPlainText();
+		if (!(text == "Введите имя" || text == "")) throw "Поле не изменено или пустое!";
 		QSqlQuery Query(db);
 		Query.exec("SELECT Sities.id FROM Sities ORDER BY Sities.id DESC limit 1 ");
 		Query.next();
 		Query.exec("INSERT INTO Sities VALUES (" + QString::number(Query.value(0).toInt() + 1) + ",\"" + text + "\")");
+		if (Query.lastError().text() != "") throw Query.lastError().text();
 		reload_Sities(1);
-	}else {
-		My_Error error("Поле не изменено или пустое!");
+
+	} catch (const char* a) {
+		My_Error error(a);
+		error.exec();
+	}
+	catch (QString a) {
+		My_Error error(a);
 		error.exec();
 	}
 }
@@ -262,7 +274,6 @@ void edit_DB::on_Add_Shop_clicked(){
 		My_Error error(a);
 		error.exec();
 	}
-
 }
 
 void edit_DB::on_Add_Connection_clicked(){
@@ -279,15 +290,23 @@ void edit_DB::on_Add_Connection_clicked(){
 		is_PC = ui->Connect_PC->isChecked();
 
 		QSqlQuery Query(db);
+
 		Query.exec("INSERT INTO Work_Places VALUES (" + QString::number(connect_shop) + ", "
 				+ QString::number(is_PC) + ", "
 				+ "'" + id + "', '" + Password + "', '" + Name + "', "
 				+ QString::number(is_Angry) + ")");
+
+		if (Query.lastError().text() != "") throw Query.lastError().text();
+
 		reload_Connections();
 	}  catch (const char* a) {
 		My_Error error(a);
 		error.exec();
 	}
+	catch (QString a) {
+			My_Error error(a);
+			error.exec();
+		}
 }
 
 void edit_DB::on_Add_Worker_clicked(){
@@ -306,7 +325,8 @@ void edit_DB::on_Add_Worker_clicked(){
 		Query.exec("INSERT INTO Workers VALUES (" + QString::number(worker_shop) + ", "
 				+ "'" + Name + "', '" + Number + "', '" + Position + "')");
 		reload_Workers();
-	}  catch (const char* a) {
+	}
+	catch (const char* a) {
 		My_Error error(a);
 		error.exec();
 	}
