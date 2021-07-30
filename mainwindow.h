@@ -23,7 +23,6 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT
-	QString path, path_normal;
 	Client *Clients;
 	QSqlDatabase db;
 
@@ -31,10 +30,6 @@ public:
 	MainWindow(QWidget *parent);
 	MainWindow();
 
-	void set_path (QString P){
-		path = P + "/AnyDesk.exe ";
-		path_normal = P;
-	}
 
 	bool read_DB();
 

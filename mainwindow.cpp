@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-
 void Run(QString path);
 void Ask(QString path);
 
@@ -24,10 +23,17 @@ MainWindow::~MainWindow(){
 
 //Base Functions
 void MainWindow::Reload_DB(){  //Potential BIIIIG memory leak
+	int client = ui->tabWidget->currentIndex(), sity = Clients[client].get_index();
+
 	while (ui->tabWidget->count())
 		ui->tabWidget->removeTab(0);
 
 	read_DB();
+
+	if(client <= ui->tabWidget->count()){
+		ui->tabWidget->setCurrentIndex(client);
+		Clients[client].set_index(sity);
+	}
 }
 
 
@@ -143,7 +149,7 @@ Client* Add_Clients(QSqlDatabase db, int &cl){
 }
 
 bool MainWindow::read_DB(){
-	db.setDatabaseName(path_normal + "/Sourse/main_db.db");
+	db.setDatabaseName("./Sourse/main_db.db");
 
 	if (!db.open()) {
 		My_Error error("DB is offline");
@@ -177,9 +183,6 @@ void kill(){
 }
 
 void Run(QString path){
-#ifdef WIN64
-	path.replace("/","\\");
-#endif
 	std::thread thr1(system,path.toLocal8Bit().data()), thr2(kill);
 	thr1.detach();
 	thr2.detach();
@@ -195,9 +198,9 @@ void Ask(QString path){
 void MainWindow::open_connect(){
 	my_button *button = (my_button*) sender();
 	if (button->get_angry())
-		Ask ("echo " + button->get_pas() + " | " + path + QString::number(button->get_id()) + + " --with-password");
+		Ask ("echo " + button->get_pas() + " | " + ".\\AnyDesk.exe " + QString::number(button->get_id()) + + " --with-password");
 	else
-		Run ("echo " + button->get_pas() + " | " + path + QString::number(button->get_id()) + + " --with-password");
+		Run ("echo " + button->get_pas() + " | " + ".\\AnyDesk.exe " + QString::number(button->get_id()) + + " --with-password");
 }
 
 

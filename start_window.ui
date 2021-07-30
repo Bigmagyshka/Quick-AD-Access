@@ -73,7 +73,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Рапространение программы возможно на не комерческой основе согласно Qt LGPL </string>
+    <string>Рапространение программы возможно на некоммерческой основе согласно Qt LGPL </string>
    </property>
    <property name="textFormat">
     <enum>Qt::RichText</enum>

@@ -31,5 +31,8 @@ public:
 	int get_count() {return count;}
 	void set_name(QString _name){name = _name;}
 	QString get_name() {return name;}
+
+	int get_index();
+	void set_index(int ind);
 };
 

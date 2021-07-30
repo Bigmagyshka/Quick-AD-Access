@@ -9,8 +9,13 @@ start_Window::start_Window(QWidget *parent) :
 	setModal(true);
 }
 
-void start_Window::set_pic(QString Folder, QString ver){
-	QPixmap myPixmap( Folder + "\\Sourse\\logo.png" );
+start_Window::start_Window(QString ver) :
+	QDialog(nullptr),
+	ui(new Ui::start_Window){
+	ui->setupUi(this);
+	setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
+	setModal(true);
+	QPixmap myPixmap("./Sourse/logo.png" );
 	ui->label_picture->setPixmap( myPixmap );
 	ui->Version->setText(ver);
 	ui->Author->setText("github.com/Bigmagyshka");
@@ -21,7 +26,6 @@ void start_Window::start(double t){
 	this->exec();
 }
 
-start_Window::~start_Window()
-{
+start_Window::~start_Window(){
 	delete ui;
 }

@@ -21,3 +21,12 @@ void Client::remove(){
 	for (int i = 0; i < count; i++)
 		ui->Sities->removeTab(i);
 }
+
+int Client::get_index(){
+	return ui->Sities->currentIndex();
+}
+
+void Client::set_index(int ind){
+	if (ind <= ui->Sities->count())
+		ui->Sities->setCurrentIndex(ind);
+}
