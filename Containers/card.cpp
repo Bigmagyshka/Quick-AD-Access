@@ -19,6 +19,7 @@ Card::Card(QWidget *parent) :
 {
 	ui->setupUi(this);
 	buttons = new my_button[max_count];
+	setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
 

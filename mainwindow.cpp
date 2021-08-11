@@ -19,14 +19,17 @@ MainWindow::MainWindow()
 
 MainWindow::~MainWindow(){
 	delete ui;
+	delete[] Clients;
 }
 
 //Base Functions
-void MainWindow::Reload_DB(){  //Potential BIIIIG memory leak
+void MainWindow::Reload_DB(){
 	int client = ui->tabWidget->currentIndex(), sity = Clients[client].get_index();
 
+	Client *OLD = Clients;
 	while (ui->tabWidget->count())
 		ui->tabWidget->removeTab(0);
+
 
 	read_DB();
 
@@ -34,6 +37,8 @@ void MainWindow::Reload_DB(){  //Potential BIIIIG memory leak
 		ui->tabWidget->setCurrentIndex(client);
 		Clients[client].set_index(sity);
 	}
+
+	delete[] OLD;
 }
 
 
@@ -220,3 +225,4 @@ void MainWindow::on_Delete_From_DB_triggered(){
 	Delete_DB.exec();
 	Reload_DB();
 }
+

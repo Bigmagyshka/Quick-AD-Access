@@ -5,10 +5,12 @@ Sity::Sity(QWidget *parent) :
 	QWidget(parent),
 	ui(new Ui::Sity){
 	ui->setupUi(this);
+	setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
 Sity::~Sity(){
 	delete ui;
+	delete [] cards;
 }
 
 

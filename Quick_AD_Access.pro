@@ -5,7 +5,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++11
 
 
-VERSION = 0.73
+VERSION = 0.74
 
 QMAKE_TARGET_COMPANY = BiGMaG
 QMAKE_TARGET_PRODUCT = Quick_AD_Access

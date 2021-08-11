@@ -7,11 +7,13 @@ Client::Client(QWidget *parent):
 	ui(new Ui::Client)
 {
 	ui->setupUi(this);
+	setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
 Client::~Client(){
 	delete ui;
- }
+	delete [] sities;
+}
 
 void Client::addTab(int poz){
 	ui->Sities->addTab(&sities[poz],sities[poz].get_name());

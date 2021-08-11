@@ -45,7 +45,14 @@
     <addaction name="Edit_DB"/>
     <addaction name="Delete_From_DB"/>
    </widget>
+   <widget class="QMenu" name="menuTEST">
+    <property name="title">
+     <string>TEST</string>
+    </property>
+    <addaction name="action_2"/>
+   </widget>
    <addaction name="menu"/>
+   <addaction name="menuTEST"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="Menu_1">
@@ -64,6 +71,11 @@
   <action name="Delete_From_DB">
    <property name="text">
     <string>Удалить Данные из БД</string>
+   </property>
+  </action>
+  <action name="action_2">
+   <property name="text">
+    <string>Удаление карточки</string>
    </property>
   </action>
  </widget>

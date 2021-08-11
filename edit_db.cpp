@@ -552,11 +552,11 @@ void edit_DB::on_Workers_cellChanged(int row, int column){
 			break;
 
 			case 1:
-				Query.exec("UPDATE Workers SET Number= '" + Number + "' WHERE Shop_id= " + QString::number(worker_shop) + " AND Name = '" + Name + ";");
+				Query.exec("UPDATE Workers SET Number= '" + Number + "' WHERE Shop_id= " + QString::number(worker_shop) + " AND Name = '" + Name + "';");
 			break;
 
 			case 2:
-				Query.exec("UPDATE Workers SET Position='" + Position + "' WHERE Shop_id= " + QString::number(worker_shop) + " AND Number = '" + Number + ";");
+				Query.exec("UPDATE Workers SET Position='" + Position + "' WHERE Shop_id= " + QString::number(worker_shop) + " AND Number = '" + Number + "';");
 			}
 
 		reload_Workers();
