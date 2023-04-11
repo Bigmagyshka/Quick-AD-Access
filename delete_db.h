@@ -2,9 +2,7 @@
 #include <QDialog>
 #include <QSqlDatabase>
 
-namespace Ui {
-class delete_db;
-}
+namespace Ui {class delete_db;}
 
 class delete_db : public QDialog
 {
@@ -13,7 +11,7 @@ class delete_db : public QDialog
 public:
 	explicit delete_db(QWidget *parent = nullptr);
 	delete_db (QSqlDatabase &db);
-	~delete_db();
+	virtual ~delete_db();
 
 	void reload_Clients();
 	void reload_Sities();

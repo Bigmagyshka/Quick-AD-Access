@@ -13,6 +13,7 @@
 #include "Containers/Client.h"
 #include "Containers/Sity.h"
 #include "Containers/Card.h"
+#include "Containers/ADButton.h"
 
 #ifndef __linux__
 #include "windows.h"
@@ -218,7 +219,7 @@ void Ask(QString path){
 }
 
 void MainWindow::open_connect(){
-	my_button *button = (my_button*) sender();
+	ADButton *button = (ADButton*) sender();
 	if (button->get_angry())
 		Ask ("echo " + button->get_pas() + " | " + ".\\AnyDesk.exe " + QString::number(button->get_id()) + + " --with-password");
 	else

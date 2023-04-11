@@ -17,6 +17,7 @@ RC_ICONS =  Sourse/m.ico
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Containers/ADButton.cpp \
     Containers/Card.cpp \
     Containers/Client.cpp \
     Containers/Sity.cpp \
@@ -29,6 +30,7 @@ SOURCES += \
     start_window.cpp
 
 HEADERS += \
+    Containers/ADButton.h \
     Containers/Card.h \
     Containers/Client.h \
     Containers/Sity.h \

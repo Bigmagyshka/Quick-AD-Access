@@ -2,15 +2,7 @@
 
 #include "Containers/Card.h"
 #include "ui_Card.h"
-
-my_button::my_button(QWidget *parent) :
-	QPushButton(parent){
-}
-
-my_button::my_button() :
-	QPushButton(nullptr){
-}
-
+#include "Containers/ADButton.h"
 
 
 Card::Card(QWidget *parent) :
@@ -18,7 +10,7 @@ Card::Card(QWidget *parent) :
 	ui(new Ui::Card)
 {
 	ui->setupUi(this);
-	buttons = new my_button[max_count];
+	buttons = new ADButton[max_count];
 	setAttribute(Qt::WA_DeleteOnClose, true);
 }
 

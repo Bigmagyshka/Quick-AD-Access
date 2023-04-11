@@ -15,7 +15,7 @@ public:
 	ask(bool &_flag, QString Question);
 	ask(bool &_flag, QString Question, QString Answer_1, QString Answer_2);
 	void set_f(bool &k){flag = &k;}
-	~ask();
+	virtual ~ask();
 
 private slots:
 	void on_pushButton_clicked();

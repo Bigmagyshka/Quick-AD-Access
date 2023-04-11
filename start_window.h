@@ -11,7 +11,7 @@ public:
 	explicit start_Window(QWidget *parent = nullptr);
 	explicit start_Window(QString ver);
 	void start(double t);
-	~start_Window();
+	virtual ~start_Window();
 
 private:
 	Ui::start_Window *ui;

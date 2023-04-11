@@ -1,30 +1,9 @@
 #pragma once
-
 #include <QWidget>
-#include <QPushButton>
 
-class my_button : public QPushButton{
-	long id;
-	bool is_angry;
-	QString password;
+class ADButton;
 
-public:
-	explicit my_button(QWidget *parent);
-	explicit my_button();
-	void set_id(long z){id = z;}
-	long get_id(){return id;}
-	void set_pas(QString _pas){password = _pas;}
-	QString get_pas(){return password;}
-	void set_angry(bool _angry){is_angry = _angry;}
-	bool get_angry(){return is_angry;}
-
-	virtual ~my_button(){};
-};
-
-
-namespace Ui {
-class Card;
-}
+namespace Ui { class Card; }
 
 class Card : public QWidget
 {
@@ -35,7 +14,7 @@ class Card : public QWidget
 	bool error = false;
 
 public:
-	my_button *buttons;
+	ADButton *buttons;
 
 	explicit Card(QWidget *parent = nullptr);
 	void add_button(long _id, QString _password, QString _name, bool _angry);

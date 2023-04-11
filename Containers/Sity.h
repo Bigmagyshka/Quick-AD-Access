@@ -24,7 +24,7 @@ public:
 	void set_name(QString _name){name = _name;}
 	QString get_name() {return name;}
 
-	~Sity();
+	virtual ~Sity();
 
 private:
 	Ui::Sity *ui;

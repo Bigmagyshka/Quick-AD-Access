@@ -20,7 +20,7 @@ public:
 	bool read_DB();
 
 
-	~MainWindow();
+	virtual ~MainWindow();
 
 public slots:
 	void open_connect();

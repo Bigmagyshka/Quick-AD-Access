@@ -14,7 +14,7 @@ class edit_DB : public QDialog
 public:
 	explicit edit_DB(QWidget *parent = nullptr);
 	edit_DB (QSqlDatabase &db);
-	~edit_DB();
+	virtual ~edit_DB();
 	void reload_Clients();
 	void reload_Sities(int tab);
 	void reload_Shops_Choose();
