@@ -1,5 +1,4 @@
-#ifndef MY_ERROR_H
-#define MY_ERROR_H
+#pragma once
 
 #include <QDialog>
 
@@ -22,5 +21,3 @@ private slots:
 private:
 	Ui::My_Error *ui;
 };
-
-#endif // MY_ERROR_H

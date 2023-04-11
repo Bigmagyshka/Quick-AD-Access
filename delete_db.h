@@ -1,16 +1,6 @@
-#ifndef DELETE_DB_H
-#define DELETE_DB_H
-
+#pragma once
 #include <QDialog>
 #include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QSqlError>
-#include <QSqlDriver>
-
-#include "ui_delete_db.h"
-#include "My_error.h"
-#include "ask.h"
 
 namespace Ui {
 class delete_db;
@@ -61,5 +51,3 @@ private:
 	int Client = -1, Sity = -1, Shop = -1;
 	QString Connection, Number;
 };
-
-#endif // DELETE_DB_H

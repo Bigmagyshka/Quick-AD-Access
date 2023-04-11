@@ -1,14 +1,7 @@
-#ifndef EDIT_DB_H
-#define EDIT_DB_H
+#pragma once
 
 #include <QDialog>
 #include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QSqlError>
-#include <QSqlDriver>
-
-#include "My_error.h"
 
 namespace Ui {
 class edit_DB;
@@ -74,5 +67,3 @@ private:
 	QSqlDatabase db;
 	bool flag = false;
 };
-
-#endif // EDIT_DB_H

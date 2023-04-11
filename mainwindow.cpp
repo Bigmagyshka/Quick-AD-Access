@@ -1,5 +1,22 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QSqlQuery>
+#include <QSqlRecord>
+#include <QSqlError>
+#include <QSqlDriver>
+#include <thread>
+
+#include "My_error.h"
+#include "ask.h"
+#include "edit_db.h"
+#include "delete_db.h"
+#include "Containers/Client.h"
+#include "Containers/Sity.h"
+#include "Containers/Card.h"
+
+#ifndef __linux__
+#include "windows.h"
+#endif
 
 void Run(QString path);
 void Ask(QString path);

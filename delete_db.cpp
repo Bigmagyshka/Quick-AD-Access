@@ -1,5 +1,12 @@
-#include "delete_db.h"
+#include <QSqlQuery>
+#include <QSqlRecord>
+#include <QSqlError>
+#include <QSqlDriver>
 
+#include "delete_db.h"
+#include "ui_delete_db.h"
+#include "My_error.h"
+#include "ask.h"
 
 bool Ask_me(QString Question){
 	bool flag;

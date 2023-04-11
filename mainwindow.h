@@ -1,24 +1,10 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
-
+#pragma once
 #include <QMainWindow>
 #include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QSqlError>
-#include <QSqlDriver>
-#include <thread>
 
-#include "My_error.h"
-#include "ask.h"
-#include "edit_db.h"
-#include "delete_db.h"
-#include "Containers/Client.h"
-#include "windows.h"
+class Client;
 
-QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
-QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
 {
@@ -50,4 +36,3 @@ private slots:
 private:
 	Ui::MainWindow *ui;
 };
-#endif // MAINWINDOW_H

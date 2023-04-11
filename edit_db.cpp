@@ -1,5 +1,11 @@
+#include <QSqlQuery>
+#include <QSqlRecord>
+#include <QSqlError>
+#include <QSqlDriver>
+
 #include "edit_db.h"
 #include "ui_edit_db.h"
+#include "My_error.h"
 
 
 #define FLAG_ON flag = true;

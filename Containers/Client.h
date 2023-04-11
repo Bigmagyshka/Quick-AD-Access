@@ -1,10 +1,10 @@
+#pragma once
 #include <QTabWidget>
 #include <QWidget>
-#include "Containers/sity.h"
 
+class Sity;
 
 namespace Ui { class Client; }
-
 
 class Client : public QWidget
 {
@@ -21,7 +21,7 @@ public:
 	Ui::Client *ui;
 
 	Client(QWidget *parent = nullptr);
-	~Client();
+	virtual ~Client();
 
 	void addTab(int poz);
 	void remove();

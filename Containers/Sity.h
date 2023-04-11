@@ -1,9 +1,8 @@
+#pragma once
 #include <QWidget>
-#include "Containers/card.h"
 
-namespace Ui {
-class Sity;
-}
+class Card;
+namespace Ui {class Sity;}
 
 class Sity : public QWidget
 {

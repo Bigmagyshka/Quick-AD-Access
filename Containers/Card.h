@@ -1,9 +1,7 @@
-#ifndef CARD_H
-#define CARD_H
+#pragma once
 
 #include <QWidget>
 #include <QPushButton>
-
 
 class my_button : public QPushButton{
 	long id;
@@ -20,7 +18,7 @@ public:
 	void set_angry(bool _angry){is_angry = _angry;}
 	bool get_angry(){return is_angry;}
 
-	~my_button(){};
+	virtual ~my_button(){};
 };
 
 
@@ -47,10 +45,8 @@ public:
 	QString get_name() {return name;}
 	void set_id(int _id){id = _id;}
 	int get_id() {return id;}
-	~Card();
+	virtual ~Card();
 
 private:
 	Ui::Card *ui;
 };
-
-#endif // CARD_H

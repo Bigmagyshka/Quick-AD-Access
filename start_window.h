@@ -1,6 +1,4 @@
-#ifndef START_WINDOW_H
-#define START_WINDOW_H
-
+#pragma once
 #include <QDialog>
 #include <QTimer>
 
@@ -18,5 +16,3 @@ public:
 private:
 	Ui::start_Window *ui;
 };
-
-#endif // START_WINDOW_H

@@ -1,7 +1,7 @@
-#include "Containers/card.h"
-#include "ui_card.h"
-
 #include "QLabel"
+
+#include "Containers/Card.h"
+#include "ui_Card.h"
 
 my_button::my_button(QWidget *parent) :
 	QPushButton(parent){

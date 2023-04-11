@@ -1,6 +1,6 @@
-#include "Containers/client.h"
-#include "ui_client.h"
-
+#include "Containers/Client.h"
+#include "ui_Client.h"
+#include "Containers/Sity.h"
 
 Client::Client(QWidget *parent):
 	QWidget(parent),

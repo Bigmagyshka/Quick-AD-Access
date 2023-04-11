@@ -1,5 +1,6 @@
-#include "Containers/sity.h"
-#include "ui_sity.h"
+#include "Containers/Sity.h"
+#include "ui_Sity.h"
+#include "Containers/Card.h"
 
 Sity::Sity(QWidget *parent) :
 	QWidget(parent),
