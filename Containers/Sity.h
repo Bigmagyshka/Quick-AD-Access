@@ -7,24 +7,17 @@ namespace Ui {class Sity;}
 class Sity : public QWidget
 {
 	Q_OBJECT
-	int id;
-	QString name;
+	int m_nID {-1};
+	QString m_sName;
+	QVector<Card *> m_vecCards;
 
 public:
-	explicit Sity(QWidget *parent = nullptr);
-	Card *cards;
-	int count;
+	Sity(QWidget *parent, int nID, const QString sName);
 
-	void addCard(int poz);
-	void remove();
-	void set_id(int _id){id = _id;}
-	int get_id() {return id;}
-	void set_count(int _count){count = _count;}
-	int get_count() {return count;}
-	void set_name(QString _name){name = _name;}
-	QString get_name() {return name;}
+	void SetCards(const QVector<Card *> &vecCards);
+	QString GetName() const;
 
-	virtual ~Sity();
+	virtual ~Sity() = default;
 
 private:
 	Ui::Sity *ui;

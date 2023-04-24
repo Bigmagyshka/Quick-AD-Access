@@ -1,20 +1,27 @@
 #pragma once
 #include <QPushButton>
 
-class ADButton : public QPushButton{
-	long id {0};
-	bool is_angry {false};
-	QString password;
+class ADConnectButton : public QPushButton
+{
+	QString m_sName;
+	int m_nConnectionID {0};
+	QString m_sPassword;
+	bool m_bIsAngry {false};
+	QString m_sAddittionalInfo;
+
+	static void kill();
+	void Run(QString path) const;
+	void Ask(QString path) const;
 
 public:
-	explicit ADButton(QWidget *parent);
-	explicit ADButton();
-	void set_id(long z);
-	long get_id();
-	void set_pas(QString _pas);
-	QString get_pas();
-	void set_angry(bool _angry);
-	bool get_angry();
+	ADConnectButton(QWidget *parent, int nConnectionID, const QString &sPassword, bool bIsAngry, const QString &sName, const QString &sAddittionalInfo);
 
-	virtual ~ADButton() = default;
+	long GetConnectionID() const;
+	QString GetPassword() const;
+	bool GetIsAngry() const;
+
+	virtual ~ADConnectButton() = default;
+
+public slots:
+	void open_connect() const;
 };

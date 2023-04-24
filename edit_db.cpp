@@ -11,6 +11,12 @@
 #define FLAG_ON flag = true;
 #define FLAG_OFF flag = false;
 
+void edit_DB::ShowError(QString sError) const
+{
+	My_Error error(sError);
+	error.exec();
+}
+
 edit_DB::edit_DB(QWidget *parent) : QDialog(parent), ui(new Ui::edit_DB)
 {
 	ui->setupUi(this);
@@ -28,8 +34,7 @@ edit_DB::edit_DB(QSqlDatabase &db) : QDialog(nullptr), ui(new Ui::edit_DB){
 		reload_Clients();
 		reload_Sities(1);
 	}else{
-		My_Error error("DB is offline");
-		error.exec();
+		ShowError("DB is offline");
 	}
 
 	ui->Choose_Client1->setColumnWidth(0,10);
@@ -222,44 +227,45 @@ void edit_DB::reload_Sities(int tab){
 
 //Buttons
 void edit_DB::on_Add_Client_clicked(){
-	try {
-		QString text = ui->textBrowser_2->toPlainText();
-		if (!(text == "Введите имя" || text == ""))throw "Поле не изменено или пустое!";
-		QSqlQuery Query(db);
-		Query.exec("SELECT Clients.id FROM Clients ORDER BY Clients.id DESC limit 1 ");
-		Query.next();
-		Query.exec("INSERT INTO Clients VALUES (" + QString::number(Query.value(0).toInt() + 1) + ",\"" + text + "\")");
-		if (Query.lastError().text() != "") throw Query.lastError().text();
-		reload_Clients();
-	}  catch (const char* a) {
-		My_Error error(a);
-		error.exec();
+
+	auto text = ui->textBrowser_2->toPlainText();
+	if (text == "Введите имя" || text == "")
+	{
+		ShowError("Поле не изменено или пустое!");
+		return;
 	}
-	catch (QString a) {
-		My_Error error(a);
-		error.exec();
+
+	QSqlQuery Query(db);
+	Query.exec("SELECT Clients.id FROM Clients ORDER BY Clients.id DESC limit 1 ");
+	Query.next();
+	Query.exec("INSERT INTO Clients VALUES (" + QString::number(Query.value(0).toInt() + 1) + ",\"" + text + "\")");
+	if (Query.lastError().text() != "")
+	{
+		ShowError(Query.lastError().text());
+		return;
 	}
+	reload_Clients();
 }
 
 void edit_DB::on_Add_Sity_clicked(){
-	try {
-		QString text = ui->textBrowser_2->toPlainText();
-		if (!(text == "Введите имя" || text == "")) throw "Поле не изменено или пустое!";
-		QSqlQuery Query(db);
-		Query.exec("SELECT Sities.id FROM Sities ORDER BY Sities.id DESC limit 1 ");
-		Query.next();
-		Query.exec("INSERT INTO Sities VALUES (" + QString::number(Query.value(0).toInt() + 1) + ",\"" + text + "\")");
-		if (Query.lastError().text() != "") throw Query.lastError().text();
-		reload_Sities(1);
 
-	} catch (const char* a) {
-		My_Error error(a);
-		error.exec();
+	QString text = ui->textBrowser_2->toPlainText();
+	if (text == "Введите имя" || text == "")
+	{
+		ShowError("Поле не изменено или пустое!");
+		return;
 	}
-	catch (QString a) {
-		My_Error error(a);
-		error.exec();
+
+	QSqlQuery Query(db);
+	Query.exec("SELECT Sities.id FROM Sities ORDER BY Sities.id DESC limit 1 ");
+	Query.next();
+	Query.exec("INSERT INTO Sities VALUES (" + QString::number(Query.value(0).toInt() + 1) + ",\"" + text + "\")");
+	if (Query.lastError().text() != "")
+	{
+		ShowError(Query.lastError().text());
+		return;
 	}
+	reload_Sities(1);
 }
 
 void edit_DB::on_Add_Shop_clicked(){

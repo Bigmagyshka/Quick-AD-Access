@@ -11,6 +11,7 @@ class edit_DB : public QDialog
 {
 	Q_OBJECT
 
+	void ShowError(QString sError) const;
 public:
 	explicit edit_DB(QWidget *parent = nullptr);
 	edit_DB (QSqlDatabase &db);

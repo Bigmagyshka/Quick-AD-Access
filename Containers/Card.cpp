@@ -5,49 +5,42 @@
 #include "Containers/ADButton.h"
 
 
-Card::Card(QWidget *parent) :
+Card::Card(QWidget *parent, int nID, const QString &sName) :
 	QWidget(parent),
 	ui(new Ui::Card)
 {
 	ui->setupUi(this);
-	buttons = new ADButton[max_count];
-	setAttribute(Qt::WA_DeleteOnClose, true);
+	m_sName = sName;
+	m_nID = nID;
+	ui->card_1->setTitle(m_sName);
 }
 
-
-void Card::add_button(long _id, QString _password, QString _name, bool _angry){
-	if (count_buttons == max_count) {
-		if (!error){
+bool Card::add_button(long nConnectionID, const QString &sPassword, QString sName, bool bIsAngry)
+{
+	if (m_nCurButtonCount == m_nMaxButtonCount)
+	{
+		if (!m_bIsError){
 			ui->button_box->addWidget(new QLabel("Превышен лимит кнопок"));
-			error = !error;
+			m_bIsError = !m_bIsError;
 		}
-		return;
+		return false;
 	}
-	buttons[count_buttons].set_id(_id);
-	if (!_name.isEmpty())
-	buttons[count_buttons].setText(_name);
-	buttons[count_buttons].set_pas(_password);
-	buttons[count_buttons].set_angry(_angry);
-	buttons[count_buttons].setToolTip(QString::number(buttons[count_buttons].get_id()));
-	buttons[count_buttons].setToolTipDuration(5000);
-	ui->button_box->addWidget(&buttons[count_buttons]);
-	count_buttons++;
+	auto sAdditionalInfo = QString::number(nConnectionID);
+	auto pNewButton = new ADConnectButton(this, nConnectionID, sPassword, bIsAngry, sName, sAdditionalInfo);
+
+	ui->button_box->addWidget(pNewButton);
+	m_vecButtons.emplaceBack(pNewButton);
+	++m_nCurButtonCount;
+	return true;
 }
 
-int Card::add_Worker(QString Name, QString Position, QString Number){
+bool Card::add_Worker(QString Name, QString Position, QString Number){
 	ui->table_card_1->insertRow(ui->table_card_1->rowCount());
 	ui->table_card_1->setItem(ui->table_card_1->rowCount()-1, 0, new QTableWidgetItem(Name));
 	ui->table_card_1->setItem(ui->table_card_1->rowCount()-1, 2, new QTableWidgetItem(Position));
 	ui->table_card_1->setItem(ui->table_card_1->rowCount()-1, 1, new QTableWidgetItem(Number));
-	return 1;
+	return true;
 }
 
-void Card::set_name(QString _name){
-	name = _name;
-	ui->card_1->setTitle(name);
-}
+QString Card::GetName() const {return m_sName;}
 
-Card::~Card(){
-	delete ui;
-	delete[] buttons;
- }

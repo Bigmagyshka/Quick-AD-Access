@@ -2,25 +2,24 @@
 #include "ui_Sity.h"
 #include "Containers/Card.h"
 
-Sity::Sity(QWidget *parent) :
-	QWidget(parent),
-	ui(new Ui::Sity){
+Sity::Sity(QWidget *parent, int nID, const QString sName) :
+	QWidget(parent), m_nID(nID), m_sName(sName), ui(new Ui::Sity)
+{
 	ui->setupUi(this);
-	setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
-Sity::~Sity(){
-	delete ui;
-	delete [] cards;
+void Sity::SetCards(const QVector<Card *> &vecCards)
+{
+	m_vecCards = vecCards;
+
+	for(int nPoz{0}; nPoz < m_vecCards.size(); ++nPoz)
+	{
+		int row = nPoz / 3, column = nPoz % 3;
+		ui->Default->addWidget(m_vecCards[nPoz],row,column);
+	}
 }
 
-
-void Sity::addCard(int poz){
-	int row = poz / 3, column = poz % 3;
-	ui->Default->addWidget(&cards[poz],row,column);
-}
-
-void Sity::remove(){
-	for (int i = 0; i < count; i++)
-	ui->Default->removeWidget(&cards[i]);
+QString Sity::GetName() const
+{
+	return m_sName;
 }

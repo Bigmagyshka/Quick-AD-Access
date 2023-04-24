@@ -1,31 +1,29 @@
 #pragma once
 #include <QWidget>
 
-class ADButton;
+class ADConnectButton;
 
 namespace Ui { class Card; }
 
 class Card : public QWidget
 {
 	Q_OBJECT
-	QString name;
-	int id;
-	int count_buttons = 0, max_count = 6;
-	bool error = false;
+	QString m_sName;
+	int m_nCurButtonCount {0};
+	const int m_nMaxButtonCount {6};
+	bool m_bIsError {false};
+	int m_nID {-1};
 
 public:
-	ADButton *buttons;
+	QVector<ADConnectButton *> m_vecButtons;
 
-	explicit Card(QWidget *parent = nullptr);
-	void add_button(long _id, QString _password, QString _name, bool _angry);
-	int add_Worker(QString Name, QString Position, QString Number);
-	int get_count(){return count_buttons;};
-	void set_name(QString _name);
-	QString get_name() {return name;}
-	void set_id(int _id){id = _id;}
-	int get_id() {return id;}
-	virtual ~Card();
+	Card(QWidget *parent, int nID, const QString &sName);
+	bool add_button(long nID, const QString &sPassword, QString sName, bool bIsAngry);
+	bool add_Worker(QString Name, QString Position, QString Number);
+	QString GetName() const;
+
+	virtual ~Card() = default;
 
 private:
-	Ui::Card *ui;
+	Ui::Card *ui {nullptr};
 };

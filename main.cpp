@@ -10,7 +10,7 @@ int main(int argc, char *argv[]){
 	QApplication a(argc, argv);
 
 #ifdef QT_NO_DEBUG
-	start_Window Start("Version: 0.74");
+	start_Window Start("Version: " + QString::number(QT_VERSION));
 	Start.start(2.5);
 #endif
 

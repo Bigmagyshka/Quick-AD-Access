@@ -1,17 +1,51 @@
 #include "ADButton.h"
+#include "ask.h"
+#include <thread>
 
-ADButton::ADButton(QWidget *parent) : QPushButton(parent){}
+ADConnectButton::ADConnectButton(QWidget *parent, int nConnectionID, const QString &sPassword, bool bIsAngry, const QString &sName, const QString &sAddittionalInfo)
+	: QPushButton(parent), m_sName(sName), m_nConnectionID(nConnectionID), m_sPassword(sPassword), m_bIsAngry(bIsAngry), m_sAddittionalInfo(sAddittionalInfo)
+{
+	connect(this, SIGNAL(clicked()), this, SLOT(open_connect()));
+	setText(sName);
+	setToolTip(sAddittionalInfo);
+	setToolTipDuration(10000);
+}
 
-ADButton::ADButton() : QPushButton(nullptr){}
+long ADConnectButton::GetConnectionID() const {
+	return m_nConnectionID;
+}
 
-void ADButton::set_id(long z){id = z;}
+QString ADConnectButton::GetPassword() const {
+	return m_sPassword;
+}
 
-long ADButton::get_id(){return id;}
+bool ADConnectButton::GetIsAngry() const {
+	return m_bIsAngry;
+}
 
-void ADButton::set_pas(QString _pas){password = _pas;}
+void ADConnectButton::kill()
+{
+	std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+	system("taskkill /IM cmd.exe");
+}
 
-QString ADButton::get_pas(){return password;}
+void ADConnectButton::Run(QString path) const
+{
+	std::thread thr1(system,path.toLocal8Bit().data()), thr2(ADConnectButton::kill);
+	thr1.detach();
+	thr2.detach();
+}
 
-void ADButton::set_angry(bool _angry){is_angry = _angry;}
+void ADConnectButton::Ask(QString path) const
+{
+	bool k;
+	ask Ask(k,"Управляющий требует, чтобы перед подключением к кассе ему позвонили !!!");
+	Ask.exec();
+	if (k) Run(path);
+}
 
-bool ADButton::get_angry(){return is_angry;}
+void ADConnectButton::open_connect() const
+{
+	auto sConnect = QString("echo " + m_sPassword + " | " + ".\\AnyDesk.exe " + QString::number(m_nConnectionID) + + " --with-password");
+	m_bIsAngry ? Ask(sConnect) : Run(sConnect);
+}

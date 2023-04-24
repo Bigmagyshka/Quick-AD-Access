@@ -5,7 +5,7 @@ greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
 CONFIG += c++11
 
 
-VERSION = 0.74
+VERSION = 0.75
 
 QMAKE_TARGET_COMPANY = BiGMaG
 QMAKE_TARGET_PRODUCT = Quick_AD_Access
@@ -19,7 +19,7 @@ RC_ICONS =  Sourse/m.ico
 SOURCES += \
     Containers/ADButton.cpp \
     Containers/Card.cpp \
-    Containers/Client.cpp \
+    Containers/ClientButton.cpp \
     Containers/Sity.cpp \
     My_error.cpp \
     ask.cpp \
@@ -32,7 +32,7 @@ SOURCES += \
 HEADERS += \
     Containers/ADButton.h \
     Containers/Card.h \
-    Containers/Client.h \
+    Containers/ClientButton.h \
     Containers/Sity.h \
     My_error.h \
     ask.h \
@@ -43,7 +43,6 @@ HEADERS += \
 
 FORMS += \
     Containers/Card.ui \
-    Containers/Client.ui \
     Containers/Sity.ui \
     My_error.ui \
     ask.ui \
