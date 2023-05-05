@@ -101,6 +101,9 @@
    <property name="text">
     <string>Перезагрузить БД</string>
    </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
    <property name="autoRepeat">
     <bool>false</bool>
    </property>

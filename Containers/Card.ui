@@ -10,6 +10,12 @@
     <height>200</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="minimumSize">
    <size>
     <width>300</width>
@@ -19,73 +25,69 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QGroupBox" name="card_1">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>460</width>
-     <height>200</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>460</width>
-     <height>200</height>
-    </size>
-   </property>
-   <property name="maximumSize">
-    <size>
-     <width>460</width>
-     <height>200</height>
-    </size>
-   </property>
-   <property name="title">
-    <string>name_1</string>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_18">
-    <item>
-     <layout class="QVBoxLayout" name="button_box"/>
-    </item>
-    <item>
-     <widget class="QTableWidget" name="table_card_1">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>320</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>320</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <column>
-       <property name="text">
-        <string>Имя</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Телефон</string>
-       </property>
-      </column>
-      <column>
-       <property name="text">
-        <string>Должность</string>
-       </property>
-      </column>
-     </widget>
-    </item>
-   </layout>
-  </widget>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QGroupBox" name="card_1">
+     <property name="minimumSize">
+      <size>
+       <width>460</width>
+       <height>200</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>460</width>
+       <height>200</height>
+      </size>
+     </property>
+     <property name="title">
+      <string>name_1</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_18">
+      <item>
+       <layout class="QVBoxLayout" name="button_box"/>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="table_card_1">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <column>
+         <property name="text">
+          <string>Имя</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Телефон</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Должность</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

@@ -5,7 +5,7 @@
 ADConnectButton::ADConnectButton(QWidget *parent, int nConnectionID, const QString &sPassword, bool bIsAngry, const QString &sName, const QString &sAddittionalInfo)
 	: QPushButton(parent), m_sName(sName), m_nConnectionID(nConnectionID), m_sPassword(sPassword), m_bIsAngry(bIsAngry), m_sAddittionalInfo(sAddittionalInfo)
 {
-	connect(this, SIGNAL(clicked()), this, SLOT(open_connect()));
+	connect(this, SIGNAL(released()), this, SLOT(open_connect()));
 	setText(sName);
 	setToolTip(sAddittionalInfo);
 	setToolTipDuration(10000);

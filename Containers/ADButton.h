@@ -3,6 +3,8 @@
 
 class ADConnectButton : public QPushButton
 {
+	Q_OBJECT
+
 	QString m_sName;
 	int m_nConnectionID {0};
 	QString m_sPassword;
@@ -22,6 +24,6 @@ public:
 
 	virtual ~ADConnectButton() = default;
 
-public slots:
+private slots:
 	void open_connect() const;
 };
