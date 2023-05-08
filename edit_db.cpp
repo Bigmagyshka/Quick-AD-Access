@@ -6,7 +6,7 @@
 #include "edit_db.h"
 #include "ui_edit_db.h"
 #include "My_error.h"
-
+#include "EditDB/addworker.h"
 
 #define FLAG_ON flag = true;
 #define FLAG_OFF flag = false;
@@ -289,53 +289,91 @@ void edit_DB::on_Add_Shop_clicked(){
 }
 
 void edit_DB::on_Add_Connection_clicked(){
-	try {
-		if (connect_shop == -1) throw "No shop selected!";
-		QString Name, Password, id;
-		bool is_Angry, is_PC;
-		Name = ui->Connect_Name->toPlainText();
-		if(Name.isEmpty()) throw "Name can't be empty";
-		Password = ui->Connect_Password->toPlainText();
-		id = ui->Connect_id->toPlainText();
-		if(id.toLong() < 100000000) throw "id can't be less than 100 000 000";
-		is_Angry = ui->Connect_Angry->isChecked();
-		is_PC = ui->Connect_PC->isChecked();
+	QSqlQuery Query(db);
 
-		QSqlQuery Query(db);
+	auto Name = ui->Connect_Name->toPlainText();
+	auto Password = ui->Connect_Password->toPlainText();
+	auto nConnection = ui->Connect_id->toPlainText();
+	auto is_Angry = ui->Connect_Angry->isChecked();
+	auto is_PC = ui->Connect_PC->isChecked();
+
+	try {
+		if (connect_shop == -1)
+			throw "No shop selected!";
+
+		if(Name.isEmpty())
+			throw "Name can't be empty";
+
+		if(nConnection.toLong() < 100000000)
+			throw "id can't be less than 100 000 000";
 
 		Query.exec("INSERT INTO Work_Places VALUES (" + QString::number(connect_shop) + ", "
 				+ QString::number(is_PC) + ", "
-				+ "'" + id + "', '" + Password + "', '" + Name + "', "
+				+ "'" + nConnection + "', '" + Password + "', '" + Name + "', "
 				+ QString::number(is_Angry) + ")");
 
 		if (Query.lastError().text() != "") throw Query.lastError().text();
-
 		reload_Connections();
-	}  catch (const char* a) {
+
+		AddWorker dlg(connect_shop, this);
+		if(dlg.exec() == 1)
+		{
+			auto sName = dlg.GetName();
+			auto sNumber = dlg.GetNumber();
+			auto sPosition = dlg.GetPosition();
+
+			auto sQuery = "INSERT INTO Workers VALUES (" + QString::number(connect_shop) + ", "
+					+ "'" + sName + "', '" + sNumber + "', '" + sPosition + "')";
+			Query.exec(sQuery);
+			if (Query.lastError().text() != "") throw Query.lastError().text();
+
+			reload_Workers();
+		}
+	}
+	catch (const char* a) {
 		My_Error error(a);
 		error.exec();
 	}
 	catch (QString a) {
-			My_Error error(a);
-			error.exec();
+		if(a.contains("UNIQUE constraint failed"))
+		{
+			Query.exec("SELECT Client.Name, Sity.Name, Shop.Address, Work_Places.Name from Work_Places"
+				" JOIN Shops as Shop on Work_Places.Shop_id = Shop.id"
+				" JOIN Sities as Sity on Sity.id = Shop.Sity_id"
+				" JOIN Clients as Client on Client.id = Shop.Owner_id"
+				" where Connection = " + nConnection);
+			Query.next();
+			auto sClientName = Query.value(0).toString();
+			auto sSityName = Query.value(1).toString();
+			auto sShopAddress = Query.value(2).toString();
+			auto sWorkPlaceName = Query.value(3).toString();
+
+			a = "Connection already used at PC [" + sWorkPlaceName + "]"
+				"in Shop [" + sShopAddress + "] "
+				"owned by [" + sClientName + "] "
+				"in Sity [" + sSityName + "]";
 		}
+		My_Error error(a);
+		error.exec();
+	}
 }
 
 void edit_DB::on_Add_Worker_clicked(){
+	auto sName = ui->Workers_Name->toPlainText();
+	auto sNumber = ui->Workers_Number->toPlainText();
+	auto sPosition = ui->Workers_Position->toPlainText();
+
 	try {
 		if (worker_shop == -1) throw "No shop selected!";
-		QString Name, Number, Position;
 
-		Name = ui->Workers_Name->toPlainText();
-		if(Name.isEmpty()) throw "Name can't be empty";
-		Number = ui->Workers_Number->toPlainText();
-		if(Number.isEmpty()) throw "Number can't be empty";
-		Position = ui->Workers_Position->toPlainText();
-		if(Position.isEmpty()) throw "Position can't be empty";
+		if(sName.isEmpty()) throw "Name can't be empty";
+		if(sNumber.isEmpty()) throw "Number can't be empty";
+		if(sPosition.isEmpty()) throw "Position can't be empty";
 
 		QSqlQuery Query(db);
 		Query.exec("INSERT INTO Workers VALUES (" + QString::number(worker_shop) + ", "
-				+ "'" + Name + "', '" + Number + "', '" + Position + "')");
+				+ "'" + sName + "', '" + sNumber + "', '" + sPosition + "')");
+
 		reload_Workers();
 	}
 	catch (const char* a) {

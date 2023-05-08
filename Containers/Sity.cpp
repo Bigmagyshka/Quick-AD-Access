@@ -15,7 +15,7 @@ void Sity::SetCards(const QVector<Card *> &vecCards)
 	for(int nPoz{0}; nPoz < m_vecCards.size(); ++nPoz)
 	{
 		int row = nPoz / 3, column = nPoz % 3;
-		ui->Default->addWidget(m_vecCards[nPoz],row,column);
+		ui->gridLayout->addWidget(m_vecCards[nPoz],row,column);
 	}
 }
 

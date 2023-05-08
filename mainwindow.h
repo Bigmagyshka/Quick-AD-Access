@@ -14,6 +14,7 @@ class MainWindow : public QMainWindow
 	QVector<ClientButton *> m_vecClientButtons;
 	QVector<Sity *> m_vecCurSities;
 	QSqlDatabase m_db;
+	ClientButton *m_pLastSelectedButton {nullptr};
 
 	void addWorkers(int shop_id, Card &cur_card);
 	void addButtons(int shop_id, Card &cur_card);
@@ -23,9 +24,7 @@ class MainWindow : public QMainWindow
 	QVector<ClientButton *> GetClients();
 
 public:
-	MainWindow(QWidget *parent);
-	MainWindow();
-
+	MainWindow(QWidget *parent = nullptr);
 
 	bool read_DB();
 

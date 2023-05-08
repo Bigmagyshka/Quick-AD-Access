@@ -22,15 +22,7 @@
 void Run(QString path);
 void Ask(QString path);
 
-MainWindow::MainWindow(QWidget *parent)
-	: QMainWindow(parent)
-	, ui(new Ui::MainWindow){
-	ui->setupUi(this);
-}
-
-MainWindow::MainWindow()
-	: QMainWindow()
-	, ui(new Ui::MainWindow){
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow){
 	ui->setupUi(this);
 	m_db = QSqlDatabase::addDatabase("QSQLITE");
 }
@@ -39,6 +31,8 @@ MainWindow::MainWindow()
 void MainWindow::Reload_DB(){
 	for(auto item : m_vecClientButtons)
 		item->deleteLater();
+	m_pLastSelectedButton = nullptr;
+
 	read_DB();
 }
 
@@ -47,6 +41,12 @@ void MainWindow::SetSities()
 	auto pSender = dynamic_cast<ClientButton *>(sender());
 	if(!pSender)
 		return;
+
+	if(m_pLastSelectedButton)
+		m_pLastSelectedButton->setEnabled(true);
+	m_pLastSelectedButton = pSender;
+
+	pSender->setEnabled(false);
 
 	ui->tabWidget->clear();
 	m_vecCurSities = GetSities(pSender->GetID());
@@ -169,6 +169,10 @@ bool MainWindow::read_DB(){
 	{
 		connect(item, SIGNAL(clicked()), this, SLOT(SetSities()));
 		layout->addWidget(item);
+	}
+
+	if(!m_vecClientButtons.empty()){
+		m_vecClientButtons[0]->clicked();
 	}
 
 	return 1;

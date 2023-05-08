@@ -5,7 +5,7 @@ greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
 CONFIG += c++11
 
 
-VERSION = 0.75
+VERSION = 0.76b
 
 QMAKE_TARGET_COMPANY = BiGMaG
 QMAKE_TARGET_PRODUCT = Quick_AD_Access
@@ -21,6 +21,8 @@ SOURCES += \
     Containers/Card.cpp \
     Containers/ClientButton.cpp \
     Containers/Sity.cpp \
+    EditDB/addworker.cpp \
+    EditDB/moveconnection.cpp \
     My_error.cpp \
     ask.cpp \
     delete_db.cpp \
@@ -34,6 +36,8 @@ HEADERS += \
     Containers/Card.h \
     Containers/ClientButton.h \
     Containers/Sity.h \
+    EditDB/addworker.h \
+    EditDB/moveconnection.h \
     My_error.h \
     ask.h \
     delete_db.h \
@@ -44,6 +48,8 @@ HEADERS += \
 FORMS += \
     Containers/Card.ui \
     Containers/Sity.ui \
+    EditDB/addworker.ui \
+    EditDB/moveconnection.ui \
     My_error.ui \
     ask.ui \
     delete_db.ui \

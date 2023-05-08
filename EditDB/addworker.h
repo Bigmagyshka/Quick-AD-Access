@@ -26,7 +26,7 @@ private slots:
 	void on_Add_released();
 
 private:
-	Ui::AddWorker *ui;
+	Ui::AddWorker *ui {nullptr};
 };
 
 #endif // ADDWORKER_H
