@@ -1,18 +1,16 @@
 #include "QLabel"
+#include <QSqlQuery>
 
 #include "Containers/Card.h"
 #include "ui_Card.h"
 #include "Containers/ADButton.h"
+#include "Containers/additionalinfodlg.h"
 
-
-Card::Card(QWidget *parent, int nID, const QString &sName) :
-	QWidget(parent),
-	ui(new Ui::Card)
+Card::Card(QWidget *parent, int nID, const QString &sName, const QString &sAdditionalInfo, QSqlDatabase &db) :
+	QWidget(parent), m_sName(sName), m_nID(nID), m_sAdditionalInfo(sAdditionalInfo), m_db(db), ui(new Ui::Card)
 {
 	ui->setupUi(this);
-	m_sName = sName;
-	m_nID = nID;
-	ui->card_1->setTitle(m_sName);
+	ui->card_1->setTitle(sName);
 }
 
 bool Card::add_button(long nConnectionID, const QString &sPassword, QString sName, bool bIsAngry)
@@ -25,8 +23,8 @@ bool Card::add_button(long nConnectionID, const QString &sPassword, QString sNam
 		}
 		return false;
 	}
-	auto sAdditionalInfo = QString::number(nConnectionID);
-	auto pNewButton = new ADConnectButton(this, nConnectionID, sPassword, bIsAngry, sName, sAdditionalInfo);
+	auto sToolTip = QString::number(nConnectionID);
+	auto pNewButton = new ADConnectButton(this, nConnectionID, sPassword, bIsAngry, sName, sToolTip);
 
 	ui->button_box->addWidget(pNewButton);
 	m_vecButtons.emplaceBack(pNewButton);
@@ -43,4 +41,17 @@ bool Card::add_Worker(QString Name, QString Position, QString Number){
 }
 
 QString Card::GetName() const {return m_sName;}
+
+
+void Card::on_pushButton_released()
+{
+	AdditionalInfoDlg dlg(m_sAdditionalInfo);
+	if(dlg.exec() && m_sAdditionalInfo != dlg.GetText())
+	{
+		m_sAdditionalInfo = dlg.GetText();
+		QSqlQuery Query(m_db);
+		auto sQuery = "UPDATE Shops SET AdditionalInfo = '" + m_sAdditionalInfo + "' WHERE id = " + QString::number(m_nID);
+		Query.exec(sQuery);
+	}
+}
 

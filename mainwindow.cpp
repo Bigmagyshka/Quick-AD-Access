@@ -14,6 +14,7 @@
 #include "Containers/Sity.h"
 #include "Containers/Card.h"
 #include "Containers/ADButton.h"
+#include "EditDB/moveconnection.h"
 
 #ifndef __linux__
 #include "windows.h"
@@ -21,6 +22,18 @@
 
 void Run(QString path);
 void Ask(QString path);
+
+void MainWindow::AddNewColumns() const
+{
+	QSqlQuery objQuery(m_db);
+
+	objQuery.exec("SELECT EXISTS (SELECT * FROM sqlite_master WHERE tbl_name = 'Shops' AND sql LIKE '%AdditionalInfo%')");
+	objQuery.next();
+
+	auto bIsAdditionalInfoExist = objQuery.value(0).toBool();
+	if(!bIsAdditionalInfoExist)
+		objQuery.exec("ALTER TABLE Shops ADD COLUMN AdditionalInfo TEXT");
+}
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow){
 	ui->setupUi(this);
@@ -95,18 +108,19 @@ QVector<Card *> MainWindow::Add_Cards(int id_client, int id_sity)
 	QSqlQuery Cards_Query(m_db);
 	QVector<Card *> vecCards;
 
-	Cards_Query.exec("SELECT t1.id, t1.Address "
-						"FROM Shops as t1 "
-						"JOIN Clients as t2 on t1.Owner_id = t2.id "
-						"JOIN Sities as t3 on t1.Sity_id = t3.id "
+	Cards_Query.exec("SELECT t1.id, t1.Address, t1.AdditionalInfo"
+						" FROM Shops as t1"
+						" JOIN Clients as t2 on t1.Owner_id = t2.id"
+						" JOIN Sities as t3 on t1.Sity_id = t3.id"
 						" Where t2.id = " + QString::number(id_client) +
 						" AND t3.id = " + QString::number(id_sity) + " ORDER BY t1.Address");
 
 	while (Cards_Query.next()){
 		auto nShopID = Cards_Query.value(0).toInt();
 		auto sShopName = Cards_Query.value(1).toString();
+		auto sAdditionalInfo = Cards_Query.value(2).toString();
 
-		auto pCard = new Card(nullptr, nShopID, sShopName);
+		auto pCard = new Card(nullptr, nShopID, sShopName, sAdditionalInfo, m_db);
 
 		addButtons(nShopID, *pCard);
 		addWorkers(nShopID, *pCard);
@@ -160,8 +174,10 @@ bool MainWindow::read_DB(){
 	if (!m_db.open()) {
 		My_Error error("DB is offline");
 		error.exec();
-		return 0;
+		return false;
 	}
+
+	AddNewColumns();
 
 	m_vecClientButtons = GetClients();
 	auto layout = ui->scrollAreaWidgetContents->layout();
@@ -171,11 +187,10 @@ bool MainWindow::read_DB(){
 		layout->addWidget(item);
 	}
 
-	if(!m_vecClientButtons.empty()){
+	if(!m_vecClientButtons.empty())
 		m_vecClientButtons[0]->clicked();
-	}
 
-	return 1;
+	return true;
 }
 
 //Menu Buttons
@@ -193,5 +208,13 @@ void MainWindow::on_Delete_From_DB_triggered(){
 	delete_db Delete_DB(m_db);
 	Delete_DB.exec();
 	Reload_DB();
+}
+
+
+void MainWindow::on_MoveConnection_triggered()
+{
+	MoveConnection dlg(m_db);
+	dlg.exec();
+		Reload_DB();
 }
 

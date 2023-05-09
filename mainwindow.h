@@ -23,6 +23,8 @@ class MainWindow : public QMainWindow
 	QVector<Sity *> GetSities(int nClientID);
 	QVector<ClientButton *> GetClients();
 
+	void AddNewColumns() const;
+
 public:
 	MainWindow(QWidget *parent = nullptr);
 
@@ -39,6 +41,8 @@ private slots:
 	void on_Menu_1_triggered();
 	void on_Edit_DB_triggered();
 	void on_Delete_From_DB_triggered();
+
+	void on_MoveConnection_triggered();
 
 private:
 	Ui::MainWindow *ui;

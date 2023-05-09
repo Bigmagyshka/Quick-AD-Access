@@ -9,6 +9,7 @@ ADConnectButton::ADConnectButton(QWidget *parent, int nConnectionID, const QStri
 	setText(sName);
 	setToolTip(sAddittionalInfo);
 	setToolTipDuration(10000);
+	setMaximumWidth(150);
 }
 
 long ADConnectButton::GetConnectionID() const {

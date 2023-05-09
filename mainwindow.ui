@@ -86,6 +86,7 @@
     <addaction name="Menu_1"/>
     <addaction name="separator"/>
     <addaction name="Edit_DB"/>
+    <addaction name="MoveConnection"/>
     <addaction name="Delete_From_DB"/>
    </widget>
    <widget class="QMenu" name="menuTEST">
@@ -121,6 +122,11 @@
   <action name="action_2">
    <property name="text">
     <string>Удаление карточки</string>
+   </property>
+  </action>
+  <action name="MoveConnection">
+   <property name="text">
+    <string>Перенести подключение</string>
    </property>
   </action>
  </widget>

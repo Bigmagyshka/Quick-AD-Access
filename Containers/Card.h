@@ -1,5 +1,6 @@
 #pragma once
 #include <QWidget>
+#include <QSqlDatabase>
 
 class ADConnectButton;
 
@@ -13,16 +14,21 @@ class Card : public QWidget
 	const int m_nMaxButtonCount {6};
 	bool m_bIsError {false};
 	int m_nID {-1};
+	QString m_sAdditionalInfo;
+	QSqlDatabase m_db;
 
 public:
 	QVector<ADConnectButton *> m_vecButtons;
 
-	Card(QWidget *parent, int nID, const QString &sName);
+	Card(QWidget *parent, int nID, const QString &sName, const QString &sAdditionalInfo, QSqlDatabase &db);
 	bool add_button(long nID, const QString &sPassword, QString sName, bool bIsAngry);
 	bool add_Worker(QString Name, QString Position, QString Number);
 	QString GetName() const;
 
 	virtual ~Card() = default;
+
+private slots:
+	void on_pushButton_released();
 
 private:
 	Ui::Card *ui {nullptr};
