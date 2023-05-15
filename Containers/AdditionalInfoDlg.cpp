@@ -1,4 +1,4 @@
-#include "additionalinfodlg.h"
+#include "Containers/AdditionalInfoDlg.h"
 #include "ui_additionalinfodlg.h"
 
 AdditionalInfoDlg::AdditionalInfoDlg(const QString &sText, QWidget *parent) :

@@ -5,7 +5,8 @@ greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
 CONFIG += c++11
 
 
-VERSION = 0.77
+VERSION = 0.78
+DEFINES += APP_VERSION=$$VERSION
 
 QMAKE_TARGET_COMPANY = BiGMaG
 QMAKE_TARGET_PRODUCT = Quick_AD_Access
@@ -18,13 +19,13 @@ RC_ICONS =  Sourse/m.ico
 
 SOURCES += \
     Containers/ADButton.cpp \
+    Containers/AdditionalInfoDlg.cpp \
     Containers/Card.cpp \
-    Containers/ClientButton.cpp \
-    Containers/Sity.cpp \
-    Containers/additionalinfodlg.cpp \
+    Containers/CardData.cpp \
     EditDB/addworker.cpp \
     EditDB/moveconnection.cpp \
     My_error.cpp \
+    TrialDlg/trialversiondlg.cpp \
     ask.cpp \
     delete_db.cpp \
     edit_db.cpp \
@@ -34,13 +35,13 @@ SOURCES += \
 
 HEADERS += \
     Containers/ADButton.h \
+    Containers/AdditionalInfoDlg.h \
     Containers/Card.h \
-    Containers/ClientButton.h \
-    Containers/Sity.h \
-    Containers/additionalinfodlg.h \
+    Containers/CardData.h \
     EditDB/addworker.h \
     EditDB/moveconnection.h \
     My_error.h \
+    TrialDlg/trialversiondlg.h \
     ask.h \
     delete_db.h \
     edit_db.h \
@@ -48,12 +49,12 @@ HEADERS += \
     start_window.h
 
 FORMS += \
+    Containers/AdditionalInfoDlg.ui \
     Containers/Card.ui \
-    Containers/Sity.ui \
-    Containers/additionalinfodlg.ui \
     EditDB/addworker.ui \
     EditDB/moveconnection.ui \
     My_error.ui \
+    TrialDlg/trialversiondlg.ui \
     ask.ui \
     delete_db.ui \
     edit_db.ui \

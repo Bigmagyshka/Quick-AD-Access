@@ -3,7 +3,7 @@
 #include "My_error.h"
 
 AddWorker::AddWorker(int nShopID, QWidget *parent) :
-	QDialog(parent), ui(new Ui::AddWorker), m_nShopID(nShopID)
+	QDialog(parent), m_nShopID(nShopID), ui(new Ui::AddWorker)
 {
 	ui->setupUi(this);
 }

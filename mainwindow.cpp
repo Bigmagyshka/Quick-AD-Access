@@ -10,8 +10,6 @@
 #include "ask.h"
 #include "edit_db.h"
 #include "delete_db.h"
-#include "Containers/ClientButton.h"
-#include "Containers/Sity.h"
 #include "Containers/Card.h"
 #include "Containers/ADButton.h"
 #include "EditDB/moveconnection.h"
@@ -42,130 +40,107 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 //Base Functions
 void MainWindow::Reload_DB(){
-	for(auto item : m_vecClientButtons)
-		item->deleteLater();
-	m_pLastSelectedButton = nullptr;
-
 	read_DB();
 }
 
-void MainWindow::SetSities()
-{
-	auto pSender = dynamic_cast<ClientButton *>(sender());
-	if(!pSender)
-		return;
-
-	if(m_pLastSelectedButton)
-		m_pLastSelectedButton->setEnabled(true);
-	m_pLastSelectedButton = pSender;
-
-	pSender->setEnabled(false);
-
-	ui->tabWidget->clear();
-	m_vecCurSities = GetSities(pSender->GetID());
-
-	for(auto pSity : m_vecCurSities)
-		ui->tabWidget->addTab(pSity, pSity->GetName());
-}
-
-
 // Add main data from DB
-void MainWindow::addButtons(int shop_id, Card &cur_card){
+void MainWindow::addButtons(int shop_id, CardData &cur_card){
 	QSqlQuery Query(m_db);
 
 	Query.exec("SELECT * FROM Work_Places WHERE Work_Places.Shop_id = " + QString::number(shop_id) + " ORDER BY Work_Places.Is_PC DESC");
 
 	while(Query.next())
 	{
-		auto nConnectionID {Query.value(2).toLongLong()};
-		auto sPassword {Query.value(3).toString()};
-		auto sName {Query.value(4).toString()};
-		auto bIsAngry{Query.value(5).toBool()};
+		ADButtonData obj;
+		obj.m_nConnectionID = Query.value(2).toLongLong();
+		obj.m_sPassword = Query.value(3).toString();
+		obj.m_sName = Query.value(4).toString();
+		obj.m_bIsAngry = Query.value(5).toBool();
+		obj.m_sToolTip = QString::number(obj.m_nConnectionID);
 
-		if(!cur_card.add_button(nConnectionID, sPassword, sName, bIsAngry))
-			break;
+		cur_card.m_vecButtonData.emplaceBack(obj);
 	}
 }
 
-void MainWindow::addWorkers(int shop_id, Card &cur_card){
+void MainWindow::addWorkers(int shop_id, CardData &cur_card){
 	QSqlQuery Query(m_db);
 
 	Query.exec("SELECT * FROM Workers WHERE Workers.Shop_id = " + QString::number(shop_id));
 
 	while (Query.next())
 	{
-		auto sName {Query.value(1).toString()};
-		auto sPosition {Query.value(3).toString()};
-		auto sNumber {Query.value(2).toString()};
+		WorkersData obj;
+		obj.m_sName = Query.value(1).toString();
+		obj.m_sPosition = Query.value(3).toString();
+		obj.m_sNumber = Query.value(2).toString();
 
-		if(!cur_card.add_Worker(sName, sPosition, sNumber))
-			break;
+		cur_card.m_vecWorkerData.emplaceBack(obj);
 	}
 }
 
-QVector<Card *> MainWindow::Add_Cards(int id_client, int id_sity)
+void MainWindow::ReloadCards()
 {
-	QSqlQuery Cards_Query(m_db);
-	QVector<Card *> vecCards;
+	m_vecCurCards.clear();
 
-	Cards_Query.exec("SELECT t1.id, t1.Address, t1.AdditionalInfo"
-						" FROM Shops as t1"
-						" JOIN Clients as t2 on t1.Owner_id = t2.id"
-						" JOIN Sities as t3 on t1.Sity_id = t3.id"
-						" Where t2.id = " + QString::number(id_client) +
-						" AND t3.id = " + QString::number(id_sity) + " ORDER BY t1.Address");
+	QSqlQuery Cards_Query(m_db);
+	Cards_Query.exec("SELECT * FROM Shops ORDER BY Shops.Address");
+	auto pLayout = dynamic_cast<QGridLayout *>(ui->scrollArea_Shops->widget()->layout());
 
 	while (Cards_Query.next()){
-		auto nShopID = Cards_Query.value(0).toInt();
-		auto sShopName = Cards_Query.value(1).toString();
-		auto sAdditionalInfo = Cards_Query.value(2).toString();
+		CardData obj;
+		obj.m_nID = Cards_Query.value(0).toInt();
+		obj.m_sName = Cards_Query.value(1).toString();
+		obj.m_nOwnerID = Cards_Query.value(2).toInt();
+		obj.m_nSityID = Cards_Query.value(3).toInt();
+		obj.m_sAdditionalInfo = Cards_Query.value(4).toString();
+		obj.m_db = m_db;
 
-		auto pCard = new Card(nullptr, nShopID, sShopName, sAdditionalInfo, m_db);
+		addButtons(obj.m_nID, obj);
+		addWorkers(obj.m_nID, obj);
 
-		addButtons(nShopID, *pCard);
-		addWorkers(nShopID, *pCard);
-
-		vecCards.emplaceBack(pCard);
+		pLayout->addWidget(new Card(obj), m_vecCurCards.size()/2, m_vecCurCards.size()%2);
+		m_vecCurCards.emplaceBack(obj);
 	}
-
-	return vecCards;
 }
 
-QVector<Sity *> MainWindow::GetSities(int nClientID)
+void MainWindow::ReloadClients()
 {
-	QSqlQuery Sities_Query(m_db);
-	QVector<Sity *> vecSities;
+	auto pComboClient = ui->comboBox_Client;
 
-	Sities_Query.exec("SELECT DISTINCT t1.id, t1.Name FROM Shops as t2 "
-						"JOIN Sities as t1 on t1.id = t2.Sity_id "
-						"WHERE t2.Owner_id = " + QString::number(nClientID) + " ORDER BY t1.Name");
-
-	while (Sities_Query.next()){
-		auto nSityID = Sities_Query.value(0).toInt();
-		auto sSityName = Sities_Query.value(1).toString();
-
-		auto pSity = new Sity(this, nSityID, sSityName);
-		pSity->SetCards(Add_Cards(nClientID, nSityID));
-		vecSities.emplaceBack(pSity);
-	}
-
-	return vecSities;
-}
-
-QVector<ClientButton *> MainWindow::GetClients(){
 	QSqlQuery Clients_Query(m_db);
-	QVector<ClientButton *> vecClients;
+	Clients_Query.exec("SELECT * FROM Clients where id in (select Owner_id from shops) ORDER BY Clients.Name");
 
-	Clients_Query.exec("SELECT * FROM Clients ORDER BY Clients.Name");
+	pComboClient->clear();
+	m_vecClients.clear();
+	pComboClient->addItem("", -1);
 
 	while (Clients_Query.next()){
 		auto nID = Clients_Query.value(0).toInt();
 		auto sClientName = Clients_Query.value(1).toString();
 
-		auto pClient = new ClientButton(nullptr, nID, sClientName);
-		vecClients.emplaceBack(pClient);
+		pComboClient->addItem(sClientName, nID);
+		m_vecClients.emplaceBack(sClientName, nID);
 	}
-	return vecClients;
+}
+
+void MainWindow::ReloadSities()
+{
+	auto pComboSity = ui->comboBox_Sity;
+
+	QSqlQuery objQuerySity(m_db);
+	objQuerySity.exec("SELECT * FROM Sities where id in (select Sity_id from shops) ORDER BY Sities.Name");
+
+	pComboSity->clear();
+	m_vecSities.clear();
+	pComboSity->addItem("", -1);
+
+	while (objQuerySity.next()){
+		auto nID = objQuerySity.value(0).toInt();
+		auto sSityName = objQuerySity.value(1).toString();
+
+		pComboSity->addItem(sSityName, nID);
+		m_vecSities.emplaceBack(sSityName, nID);
+	}
 }
 
 bool MainWindow::read_DB(){
@@ -179,16 +154,9 @@ bool MainWindow::read_DB(){
 
 	AddNewColumns();
 
-	m_vecClientButtons = GetClients();
-	auto layout = ui->scrollAreaWidgetContents->layout();
-	for(auto item : m_vecClientButtons)
-	{
-		connect(item, SIGNAL(clicked()), this, SLOT(SetSities()));
-		layout->addWidget(item);
-	}
-
-	if(!m_vecClientButtons.empty())
-		m_vecClientButtons[0]->clicked();
+	ReloadClients();
+	ReloadSities();
+	ReloadCards();
 
 	return true;
 }
@@ -215,6 +183,82 @@ void MainWindow::on_MoveConnection_triggered()
 {
 	MoveConnection dlg(m_db);
 	dlg.exec();
-		Reload_DB();
+	Reload_DB();
+}
+
+void MainWindow::NeedChangeClients()
+{
+	auto pComboClient = ui->comboBox_Client;
+
+	auto sClientName = pComboClient->currentText();
+	auto nSityID = ui->comboBox_Sity->currentData().toInt();
+
+	if(nSityID < 0)
+	{
+		pComboClient->clear();
+
+		pComboClient->addItem("", -1);
+		for(auto &[sName, nID] : m_vecClients)
+			pComboClient->addItem(sName, nID);
+
+		pComboClient->setCurrentText(sClientName);
+		return;
+	}
+}
+
+void MainWindow::NeedChangeSity()
+{
+
+}
+
+void MainWindow::NeedChangeCards()
+{
+	auto nClientID = ui->comboBox_Client->currentData().toInt();
+	auto nSityID = ui->comboBox_Sity->currentData().toInt();
+	auto sSearchText = ui->textBrowser_Search->toPlainText();
+
+	ui->scrollArea_Shops->widget()->deleteLater();
+
+	auto pNewLayout = new QGridLayout;
+	auto pNewWidget = new QWidget;
+
+	for(int nIndex{0}, nAddedItems{0}; nIndex < m_vecCurCards.size(); ++nIndex)
+	{
+		auto objCard = m_vecCurCards[nIndex];
+
+		if(nClientID > 0 && objCard.m_nOwnerID != nClientID)
+			continue;
+
+		if(nSityID > 0 && objCard.m_nSityID != nSityID)
+			continue;
+
+		if(!sSearchText.isEmpty() && !objCard.FindString(sSearchText))
+			continue;
+
+		pNewLayout->addWidget(new Card(objCard), nAddedItems/2, nAddedItems%2);
+		++nAddedItems;
+	}
+
+	pNewWidget->setLayout(pNewLayout);
+	ui->scrollArea_Shops->setWidget(pNewWidget);
+}
+
+void MainWindow::on_comboBox_Client_currentIndexChanged()
+{
+	NeedChangeSity();
+	NeedChangeCards();
+}
+
+
+void MainWindow::on_comboBox_Sity_currentIndexChanged()
+{
+	NeedChangeClients();
+	NeedChangeCards();
+}
+
+
+void MainWindow::on_textBrowser_Search_textChanged()
+{
+	NeedChangeCards();
 }
 

@@ -1,13 +1,16 @@
 #include "ADButton.h"
 #include "ask.h"
 #include <thread>
+#include "TrialDlg/trialversiondlg.h"
 
-ADConnectButton::ADConnectButton(QWidget *parent, int nConnectionID, const QString &sPassword, bool bIsAngry, const QString &sName, const QString &sAddittionalInfo)
-	: QPushButton(parent), m_sName(sName), m_nConnectionID(nConnectionID), m_sPassword(sPassword), m_bIsAngry(bIsAngry), m_sAddittionalInfo(sAddittionalInfo)
+bool gTrial = true;
+
+ADConnectButton::ADConnectButton(QWidget *parent, int nConnectionID, const QString &sPassword, bool bIsAngry, const QString &sName, const QString &sToolTip)
+	: QPushButton(parent), m_sName(sName), m_nConnectionID(nConnectionID), m_sPassword(sPassword), m_bIsAngry(bIsAngry), m_sToolTip(sToolTip)
 {
 	connect(this, SIGNAL(released()), this, SLOT(open_connect()));
 	setText(sName);
-	setToolTip(sAddittionalInfo);
+	setToolTip(sToolTip);
 	setToolTipDuration(10000);
 	setMaximumWidth(150);
 }
@@ -47,6 +50,24 @@ void ADConnectButton::Ask(QString path) const
 
 void ADConnectButton::open_connect() const
 {
+	if(gTrial)
+	{
+		TrialVersionDlg dlg;
+		dlg.start(1.5);
+
+		auto seconds = time(NULL);
+		auto timeinfo = localtime(&seconds);
+
+		if(timeinfo->tm_year > 2023)
+			return;
+
+		if(timeinfo->tm_mon > 5)
+			return;
+
+		if(timeinfo->tm_mday > 20)
+			return;
+	}
+
 	auto sConnect = QString("echo " + m_sPassword + " | " + ".\\AnyDesk.exe " + QString::number(m_nConnectionID) + + " --with-password");
 	m_bIsAngry ? Ask(sConnect) : Run(sConnect);
 }

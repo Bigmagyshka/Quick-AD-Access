@@ -5,12 +5,11 @@
 #include <QTimer>
 #include <thread>
 
-
 int main(int argc, char *argv[]){
 	QApplication a(argc, argv);
 
 #ifdef QT_NO_DEBUG
-	start_Window Start("Version: " + QString::number(QT_VERSION));
+	start_Window Start("Version: " + QString::number(APP_VERSION));
 	Start.start(2.5);
 #endif
 

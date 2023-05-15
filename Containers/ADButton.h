@@ -9,14 +9,14 @@ class ADConnectButton : public QPushButton
 	int m_nConnectionID {0};
 	QString m_sPassword;
 	bool m_bIsAngry {false};
-	QString m_sAddittionalInfo;
+	QString m_sToolTip;
 
 	static void kill();
 	void Run(QString path) const;
 	void Ask(QString path) const;
 
 public:
-	ADConnectButton(QWidget *parent, int nConnectionID, const QString &sPassword, bool bIsAngry, const QString &sName, const QString &sAddittionalInfo);
+	ADConnectButton(QWidget *parent, int nConnectionID, const QString &sPassword, bool bIsAngry, const QString &sName, const QString &sToolTip);
 
 	long GetConnectionID() const;
 	QString GetPassword() const;
