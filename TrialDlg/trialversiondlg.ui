@@ -34,7 +34,7 @@
    <item>
     <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Работа будет прекращена 20.05.2023</string>
+      <string>Работа будет прекращена 27.05.2023</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignBottom|Qt::AlignRight|Qt::AlignTrailing</set>

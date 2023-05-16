@@ -13,7 +13,6 @@ class edit_DB : public QDialog
 
 	void ShowError(QString sError) const;
 public:
-	explicit edit_DB(QWidget *parent = nullptr);
 	edit_DB (QSqlDatabase &db);
 	virtual ~edit_DB();
 	void reload_Clients();
@@ -65,6 +64,6 @@ private slots:
 
 private:
 	Ui::edit_DB *ui;
-	QSqlDatabase db;
+	QSqlDatabase m_db;
 	bool flag = false;
 };

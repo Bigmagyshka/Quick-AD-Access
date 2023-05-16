@@ -8,10 +8,8 @@
 int main(int argc, char *argv[]){
 	QApplication a(argc, argv);
 
-#ifdef QT_NO_DEBUG
 	start_Window Start("Version: " + QString::number(APP_VERSION));
 	Start.start(2.5);
-#endif
 
 	MainWindow w;
 	w.read_DB();

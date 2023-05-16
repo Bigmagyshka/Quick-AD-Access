@@ -36,6 +36,16 @@ void MainWindow::AddNewColumns() const
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow){
 	ui->setupUi(this);
 	m_db = QSqlDatabase::addDatabase("QSQLITE");
+
+	restoreGeometry(m_objSettings.value("MainWindow/geometry").toByteArray());
+	restoreState(m_objSettings.value("MainWindow/windowState").toByteArray());
+}
+
+MainWindow::~MainWindow(){
+	delete ui;
+
+	m_objSettings.setValue("MainWindow/geometry", saveGeometry());
+	m_objSettings.setValue("MainWindow/windowState", saveState());
 }
 
 //Base Functions
@@ -157,6 +167,8 @@ bool MainWindow::read_DB(){
 	ReloadClients();
 	ReloadSities();
 	ReloadCards();
+	ui->textBrowser_Search->clear();
+	m_db.close();
 
 	return true;
 }
@@ -188,22 +200,7 @@ void MainWindow::on_MoveConnection_triggered()
 
 void MainWindow::NeedChangeClients()
 {
-	auto pComboClient = ui->comboBox_Client;
 
-	auto sClientName = pComboClient->currentText();
-	auto nSityID = ui->comboBox_Sity->currentData().toInt();
-
-	if(nSityID < 0)
-	{
-		pComboClient->clear();
-
-		pComboClient->addItem("", -1);
-		for(auto &[sName, nID] : m_vecClients)
-			pComboClient->addItem(sName, nID);
-
-		pComboClient->setCurrentText(sClientName);
-		return;
-	}
 }
 
 void MainWindow::NeedChangeSity()

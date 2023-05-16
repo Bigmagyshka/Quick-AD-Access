@@ -1,6 +1,7 @@
 #pragma once
 #include <QMainWindow>
 #include <QSqlDatabase>
+#include <QSettings>
 #include "Containers/CardData.h"
 
 namespace Ui { class MainWindow; }
@@ -8,6 +9,7 @@ namespace Ui { class MainWindow; }
 class MainWindow : public QMainWindow
 {
 	Q_OBJECT
+	QSettings m_objSettings;
 	QVector<std::pair<QString, int>> m_vecClients;
 	QVector<std::pair<QString, int>> m_vecSities;
 	QVector<CardData> m_vecCurCards;
@@ -28,7 +30,7 @@ class MainWindow : public QMainWindow
 
 public:
 	MainWindow(QWidget *parent = nullptr);
-	virtual ~MainWindow() = default;
+	virtual ~MainWindow();
 
 	bool read_DB();
 

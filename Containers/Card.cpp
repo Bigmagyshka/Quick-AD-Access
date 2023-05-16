@@ -5,6 +5,7 @@
 #include "ui_Card.h"
 #include "Containers/ADButton.h"
 #include "Containers/AdditionalInfoDlg.h"
+#include "My_error.h"
 
 Card::Card(QWidget *parent, int nID, const QString &sName, const QString &sAdditionalInfo, QSqlDatabase &db) :
 	QWidget(parent), m_nID(nID), m_sAdditionalInfo(sAdditionalInfo), m_db(db), ui(new Ui::Card)
@@ -42,7 +43,7 @@ bool Card::add_button(long nConnectionID, const QString &sPassword, QString sNam
 	auto sToolTip = QString::number(nConnectionID);
 	auto pNewButton = new ADConnectButton(this, nConnectionID, sPassword, bIsAngry, sName, sToolTip);
 
-	ui->gridLayout_Buttons->addWidget(pNewButton, m_nCurButtonCount/2, m_nCurButtonCount%2);
+	ui->gridLayout_Buttons->addWidget(pNewButton, m_nCurButtonCount/m_nCollumns, m_nCurButtonCount%m_nCollumns);
 	m_vecButtons.emplaceBack(pNewButton);
 	++m_nCurButtonCount;
 	return true;
@@ -59,6 +60,12 @@ bool Card::add_Worker(QString Name, QString Position, QString Number){
 
 void Card::on_pushButton_released()
 {
+	if (!m_db.open()) {
+		My_Error error("DB is offline");
+		error.exec();
+		return;
+	}
+
 	AdditionalInfoDlg dlg(m_sAdditionalInfo);
 	if(dlg.exec() && m_sAdditionalInfo != dlg.GetText())
 	{
@@ -70,5 +77,7 @@ void Card::on_pushButton_released()
 		if(m_pDataParent)
 			m_pDataParent->m_sAdditionalInfo = m_sAdditionalInfo;
 	}
+
+	m_db.close();
 }
 

@@ -17,18 +17,11 @@ void edit_DB::ShowError(QString sError) const
 	error.exec();
 }
 
-edit_DB::edit_DB(QWidget *parent) : QDialog(parent), ui(new Ui::edit_DB)
-{
-	ui->setupUi(this);
-	setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
-	setModal(true);
-}
-
 edit_DB::edit_DB(QSqlDatabase &db) : QDialog(nullptr), ui(new Ui::edit_DB){
 	ui->setupUi(this);
 	setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
 	setModal(true);
-	this->db = db;
+	m_db = db;
 
 	if (db.open()){
 		reload_Clients();
@@ -54,15 +47,16 @@ edit_DB::edit_DB(QSqlDatabase &db) : QDialog(nullptr), ui(new Ui::edit_DB){
 	flag = true;
 }
 
-edit_DB::~edit_DB(){
+edit_DB::~edit_DB()
+{
 	delete ui;
+	m_db.close();
 }
-
 
 //Base functions
 void edit_DB::reload_Clients(){
 	FLAG_OFF;
-	QSqlQuery Query(db);
+	QSqlQuery Query(m_db);
 	ui->DB_Clients->setRowCount(0);
 	ui->Choose_Client1->setRowCount(0);
 	ui->Connect_Client->setRowCount(0);
@@ -90,7 +84,7 @@ void edit_DB::reload_Clients(){
 
 void edit_DB::reload_Shops_Choose(){
 	FLAG_OFF;
-	QSqlQuery Query(db);
+	QSqlQuery Query(m_db);
 	ui->Choose_Shop1->setRowCount(0);
 	Query.exec("SELECT t1.id, t1.Address "
 						"FROM Shops as t1 "
@@ -109,7 +103,7 @@ void edit_DB::reload_Shops_Choose(){
 
 void edit_DB::reload_Connections(){
 	FLAG_OFF;
-	QSqlQuery Query(db);
+	QSqlQuery Query(m_db);
 	Query.exec("SELECT * FROM Work_Places WHERE Work_Places.Shop_id = " + QString::number(connect_shop));
 	ui->Connections->setRowCount(0);
 	while (Query.next()){
@@ -125,7 +119,7 @@ void edit_DB::reload_Connections(){
 
 void edit_DB::reload_Workers(){
 	FLAG_OFF;
-	QSqlQuery Query(db);
+	QSqlQuery Query(m_db);
 	Query.exec("SELECT * FROM Workers WHERE Workers.Shop_id = " + QString::number(worker_shop));
 
 	ui->Workers->setRowCount(0);
@@ -140,7 +134,7 @@ void edit_DB::reload_Workers(){
 
 void edit_DB::reload_Sities(int tab){
 	FLAG_OFF;
-	QSqlQuery Query(db);
+	QSqlQuery Query(m_db);
 
 	switch (tab) {
 	case 1:{
@@ -235,7 +229,7 @@ void edit_DB::on_Add_Client_clicked(){
 		return;
 	}
 
-	QSqlQuery Query(db);
+	QSqlQuery Query(m_db);
 	Query.exec("SELECT Clients.id FROM Clients ORDER BY Clients.id DESC limit 1 ");
 	Query.next();
 	Query.exec("INSERT INTO Clients VALUES (" + QString::number(Query.value(0).toInt() + 1) + ",\"" + text + "\")");
@@ -256,7 +250,7 @@ void edit_DB::on_Add_Sity_clicked(){
 		return;
 	}
 
-	QSqlQuery Query(db);
+	QSqlQuery Query(m_db);
 	Query.exec("SELECT Sities.id FROM Sities ORDER BY Sities.id DESC limit 1 ");
 	Query.next();
 	Query.exec("INSERT INTO Sities VALUES (" + QString::number(Query.value(0).toInt() + 1) + ",\"" + text + "\")");
@@ -273,7 +267,7 @@ void edit_DB::on_Add_Shop_clicked(){
 		if (chosen_sity == -1) throw "Choose Sity!";
 		QString text = ui->Shop_Input->toPlainText();
 		if (text == "Введите название" || text == "") throw "Name can't be empty";
-		QSqlQuery Query(db);
+		QSqlQuery Query(m_db);
 		Query.exec("SELECT Shops.id FROM Shops ORDER BY Shops.id DESC limit 1 ");
 		Query.next();
 		Query.exec("INSERT INTO Shops VALUES (" + QString::number(Query.value(0).toInt() + 1) + ",\"" +
@@ -289,7 +283,7 @@ void edit_DB::on_Add_Shop_clicked(){
 }
 
 void edit_DB::on_Add_Connection_clicked(){
-	QSqlQuery Query(db);
+	QSqlQuery Query(m_db);
 
 	auto Name = ui->Connect_Name->toPlainText();
 	auto Password = ui->Connect_Password->toPlainText();
@@ -370,7 +364,7 @@ void edit_DB::on_Add_Worker_clicked(){
 		if(sNumber.isEmpty()) throw "Number can't be empty";
 		if(sPosition.isEmpty()) throw "Position can't be empty";
 
-		QSqlQuery Query(db);
+		QSqlQuery Query(m_db);
 		Query.exec("INSERT INTO Workers VALUES (" + QString::number(worker_shop) + ", "
 				+ "'" + sName + "', '" + sNumber + "', '" + sPosition + "')");
 
@@ -387,7 +381,7 @@ void edit_DB::on_Add_Worker_clicked(){
 //"Add Client/Sity" Tab
 void edit_DB::on_DB_Clients_cellChanged(int row, int column){
 	if (column == 1 && flag){
-		QSqlQuery Query(db);
+		QSqlQuery Query(m_db);
 		QString Name, id;
 
 		QTableWidgetItem *item = ui->DB_Clients->item(row,0);
@@ -404,7 +398,7 @@ void edit_DB::on_DB_Clients_cellChanged(int row, int column){
 
 void edit_DB::on_DB_Sities_cellChanged(int row, int column){
 	if (column == 1 && flag){
-		QSqlQuery Query(db);
+		QSqlQuery Query(m_db);
 		QString Name, id;
 
 		QTableWidgetItem *item = ui->DB_Sities->item(row,0);
@@ -422,7 +416,7 @@ void edit_DB::on_DB_Sities_cellChanged(int row, int column){
 //"Add Shop" Tab
 void edit_DB::on_Choose_Shop1_cellChanged(int row, int column){
 	if (column == 1 && flag){
-		QSqlQuery Query(db);
+		QSqlQuery Query(m_db);
 		QString Address, id;
 
 		QTableWidgetItem *item = ui->Choose_Shop1->item(row,0);
@@ -466,7 +460,7 @@ void edit_DB::on_Connect_Client_cellClicked(int row){
 }
 
 void edit_DB::on_Connect_Sity_cellClicked(int row){
-	QSqlQuery Query(db);
+	QSqlQuery Query(m_db);
 
 	QTableWidgetItem *item = ui->Connect_Sity->item(row,0);
 	if (NULL != item) connect_sity = item->text().toInt();
@@ -498,7 +492,7 @@ void edit_DB::on_Connect_Shop_cellClicked(int row){
 
 void edit_DB::on_Connections_cellChanged(int row, int column){
 	if (flag) {
-		QSqlQuery Query(db);
+		QSqlQuery Query(m_db);
 		QString Connection, Changed;
 
 		QTableWidgetItem *item = ui->Connections->item(row,1);
@@ -553,7 +547,7 @@ void edit_DB::on_Workers_Client_cellClicked(int row){
 }
 
 void edit_DB::on_Workers_Sity_cellClicked(int row){
-	QSqlQuery Query(db);
+	QSqlQuery Query(m_db);
 
 	QTableWidgetItem *item = ui->Workers_Sity->item(row,0);
 	if (NULL != item) worker_sity = item->text().toInt();
@@ -586,7 +580,7 @@ void edit_DB::on_Workers_Shop_cellClicked(int row){
 
 void edit_DB::on_Workers_cellChanged(int row, int column){
 	if (flag) {
-		QSqlQuery Query(db);
+		QSqlQuery Query(m_db);
 		QString Name, Number, Position;
 
 		QTableWidgetItem *item = ui->Workers->item(row,0);

@@ -64,7 +64,7 @@ void ADConnectButton::open_connect() const
 		if(timeinfo->tm_mon > 5)
 			return;
 
-		if(timeinfo->tm_mday > 20)
+		if(timeinfo->tm_mday > 27)
 			return;
 	}
 

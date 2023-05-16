@@ -14,6 +14,7 @@ class Card : public QWidget
 
 	int m_nCurButtonCount {0};
 	const int m_nMaxButtonCount {10};
+	const int m_nCollumns {2};
 	int m_nID {-1};
 	QString m_sAdditionalInfo;
 	QSqlDatabase m_db;
