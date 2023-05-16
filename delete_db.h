@@ -44,7 +44,7 @@ private slots:
 
 private:
 	Ui::delete_db *ui;
-	QSqlDatabase db;
+	QSqlDatabase m_db;
 
 	int Client = -1, Sity = -1, Shop = -1;
 	QString Connection, Number;

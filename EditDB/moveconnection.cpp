@@ -2,6 +2,7 @@
 #include "ui_moveconnection.h"
 
 #include <QSqlQuery>
+#include "My_error.h"
 
 void MoveConnection::reload_Clients(QTableWidget &objTable){
 	QSqlQuery Query(m_db);
@@ -75,6 +76,12 @@ void MoveConnection::reload_Sities(QTableWidget &objTable, int nSelectedClient){
 MoveConnection::MoveConnection(QSqlDatabase &db, QWidget *parent) :
 	QDialog(parent), m_db(db), ui(new Ui::MoveConnection)
 {
+	if(!m_db.open()) {
+		My_Error error("DB is offline");
+		error.exec();
+		close();
+	}
+
 	ui->setupUi(this);
 	ui->Cur_Connect_Client->setColumnWidth(0, 7);
 	ui->Cur_Connect_Sity->setColumnWidth(0, 7);
@@ -93,6 +100,7 @@ MoveConnection::MoveConnection(QSqlDatabase &db, QWidget *parent) :
 MoveConnection::~MoveConnection()
 {
 	delete ui;
+	m_db.close();
 }
 
 void MoveConnection::on_Cur_Connect_Client_cellClicked(int row)

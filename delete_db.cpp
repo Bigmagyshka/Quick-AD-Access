@@ -24,7 +24,7 @@ delete_db::delete_db(QSqlDatabase &db) : QDialog(), ui(new Ui::delete_db){
 	ui->setupUi(this);
 	setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
 	setModal(true);
-	this->db = db;
+	this->m_db = db;
 	if (db.open()){
 		reload_Clients();
 		reload_Sities();
@@ -38,11 +38,12 @@ delete_db::delete_db(QSqlDatabase &db) : QDialog(), ui(new Ui::delete_db){
 
 delete_db::~delete_db(){
 	delete ui;
+	m_db.close();
 }
 
 //Base Functions
 void delete_db::reload_Clients(){
-	QSqlQuery Query(db);
+	QSqlQuery Query(m_db);
 	ui->Clients->setRowCount(0);
 
 	Query.exec("SELECT * FROM Clients ORDER BY Clients.Name");
@@ -55,7 +56,7 @@ void delete_db::reload_Clients(){
 }
 
 void delete_db::reload_Sities(){
-	QSqlQuery Query(db);
+	QSqlQuery Query(m_db);
 	Query.exec("With my_count (ID , NAME , Shop_count) "
 				"As ("
 				"SELECT DISTINCT Sities.id, Sities.Name, sum(1) OVER(PARTITION BY Sities.Name) AS Shop_count FROM Shops "
@@ -79,7 +80,7 @@ void delete_db::reload_Sities(){
 }
 
 void delete_db::reload_Shops(){
-	QSqlQuery Query(db);
+	QSqlQuery Query(m_db);
 
 	ui->Shops->setRowCount(0);
 	ui->Connections->setRowCount(0);
@@ -100,7 +101,7 @@ void delete_db::reload_Shops(){
 }
 
 void delete_db::reload_Connections(){
-	QSqlQuery Query(db);
+	QSqlQuery Query(m_db);
 	Query.exec("SELECT * FROM Work_Places WHERE Work_Places.Shop_id = " + QString::number(Shop));
 
 	ui->Connections->setRowCount(0);
@@ -115,7 +116,7 @@ void delete_db::reload_Connections(){
 }
 
 void delete_db::reload_Workers(){
-	QSqlQuery Query(db);
+	QSqlQuery Query(m_db);
 	Query.exec("SELECT * FROM Workers WHERE Workers.Shop_id = " + QString::number(Shop));
 	ui->Workers->setRowCount(0);
 	while (Query.next()){
@@ -127,7 +128,7 @@ void delete_db::reload_Workers(){
 }
 
 void delete_db::delete_Shop(int a){
-	QSqlQuery Query(db);
+	QSqlQuery Query(m_db);
 	Query.exec("DELETE FROM Workers WHERE Workers.Shop_id = " + QString::number(a));
 	Query.exec("DELETE FROM Work_Places WHERE Work_Places.Shop_id = " + QString::number(a));
 	Query.exec("DELETE FROM Shops WHERE Shops.id = " + QString::number(a));
@@ -191,7 +192,7 @@ void delete_db::on_Del_Connection_clicked(){
 			throw 1;
 		}
 
-		QSqlQuery Query(db);
+		QSqlQuery Query(m_db);
 		Query.exec("DELETE FROM Work_Places WHERE Work_Places.Connection = '" + Connection + "'");
 		reload_Connections();
 	}  catch (const char* a) {
@@ -211,7 +212,7 @@ void delete_db::on_Del_Worker_clicked(){
 			throw 1;
 		}
 
-		QSqlQuery Query(db);
+		QSqlQuery Query(m_db);
 		Query.exec("DELETE FROM Workers WHERE Workers.Number = '" + Number + "'");
 		reload_Workers();
 	}  catch (const char* a) {
@@ -251,7 +252,7 @@ void delete_db::on_Del_Sity_clicked(){
 			throw 1;
 		}
 
-		QSqlQuery Query(db);
+		QSqlQuery Query(m_db);
 		Query.exec("SELECT DISTINCT t2.id FROM Shops as t2 "
 							"JOIN Sities as t1 on t1.id = t2.Sity_id "
 							"WHERE t2.Sity_id = " + QString::number(Sity));
@@ -284,7 +285,7 @@ void delete_db::on_Del_Client_clicked(){
 			throw 1;
 		}
 
-		QSqlQuery Query(db);
+		QSqlQuery Query(m_db);
 		Query.exec("SELECT DISTINCT t2.id FROM Shops as t2 "
 							"JOIN Sities as t1 on t1.id = t2.Sity_id "
 							"WHERE t2.Owner_id = " + QString::number(Client));

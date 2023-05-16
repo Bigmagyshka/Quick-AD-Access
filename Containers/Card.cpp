@@ -43,7 +43,10 @@ bool Card::add_button(long nConnectionID, const QString &sPassword, QString sNam
 	auto sToolTip = QString::number(nConnectionID);
 	auto pNewButton = new ADConnectButton(this, nConnectionID, sPassword, bIsAngry, sName, sToolTip);
 
-	ui->gridLayout_Buttons->addWidget(pNewButton, m_nCurButtonCount/m_nCollumns, m_nCurButtonCount%m_nCollumns);
+	int nMaxButtonsInColumn = m_nMaxButtonCount / m_nColumns;
+	int nRow = m_nCurButtonCount%nMaxButtonsInColumn;
+	int nColumn = m_nCurButtonCount/nMaxButtonsInColumn;
+	ui->gridLayout_Buttons->addWidget(pNewButton, nRow, nColumn);
 	m_vecButtons.emplaceBack(pNewButton);
 	++m_nCurButtonCount;
 	return true;

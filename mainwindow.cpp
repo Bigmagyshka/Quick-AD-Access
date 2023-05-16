@@ -36,6 +36,7 @@ void MainWindow::AddNewColumns() const
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow){
 	ui->setupUi(this);
 	m_db = QSqlDatabase::addDatabase("QSQLITE");
+	m_db.setDatabaseName("./Sourse/main_db.db");
 
 	restoreGeometry(m_objSettings.value("MainWindow/geometry").toByteArray());
 	restoreState(m_objSettings.value("MainWindow/windowState").toByteArray());
@@ -90,11 +91,14 @@ void MainWindow::addWorkers(int shop_id, CardData &cur_card){
 
 void MainWindow::ReloadCards()
 {
-	m_vecCurCards.clear();
+	m_vecCurCards.clear();	
+	ui->scrollArea_Shops->widget()->deleteLater();
 
 	QSqlQuery Cards_Query(m_db);
 	Cards_Query.exec("SELECT * FROM Shops ORDER BY Shops.Address");
-	auto pLayout = dynamic_cast<QGridLayout *>(ui->scrollArea_Shops->widget()->layout());
+
+	auto pNewLayout = new QGridLayout;
+	auto pNewWidget = new QWidget;
 
 	while (Cards_Query.next()){
 		CardData obj;
@@ -108,9 +112,12 @@ void MainWindow::ReloadCards()
 		addButtons(obj.m_nID, obj);
 		addWorkers(obj.m_nID, obj);
 
-		pLayout->addWidget(new Card(obj), m_vecCurCards.size()/2, m_vecCurCards.size()%2);
+		pNewLayout->addWidget(new Card(obj), m_vecCurCards.size()/2, m_vecCurCards.size()%2);
 		m_vecCurCards.emplaceBack(obj);
 	}
+
+	pNewWidget->setLayout(pNewLayout);
+	ui->scrollArea_Shops->setWidget(pNewWidget);
 }
 
 void MainWindow::ReloadClients()
@@ -154,8 +161,6 @@ void MainWindow::ReloadSities()
 }
 
 bool MainWindow::read_DB(){
-	m_db.setDatabaseName("./Sourse/main_db.db");
-
 	if (!m_db.open()) {
 		My_Error error("DB is offline");
 		error.exec();
@@ -246,13 +251,11 @@ void MainWindow::on_comboBox_Client_currentIndexChanged()
 	NeedChangeCards();
 }
 
-
 void MainWindow::on_comboBox_Sity_currentIndexChanged()
 {
 	NeedChangeClients();
 	NeedChangeCards();
 }
-
 
 void MainWindow::on_textBrowser_Search_textChanged()
 {
