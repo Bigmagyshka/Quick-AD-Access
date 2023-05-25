@@ -114,6 +114,7 @@ void MainWindow::ReloadCards()
 
 		pNewLayout->addWidget(new Card(obj), m_vecCurCards.size()/2, m_vecCurCards.size()%2);
 		m_vecCurCards.emplaceBack(obj);
+		m_mapSitiesByClient[obj.m_nOwnerID].insert(obj.m_nSityID);
 	}
 
 	pNewWidget->setLayout(pNewLayout);
@@ -148,7 +149,7 @@ void MainWindow::ReloadSities()
 	objQuerySity.exec("SELECT * FROM Sities where id in (select Sity_id from shops) ORDER BY Sities.Name");
 
 	pComboSity->clear();
-	m_vecSities.clear();
+	m_mapSities.clear();
 	pComboSity->addItem("", -1);
 
 	while (objQuerySity.next()){
@@ -156,7 +157,7 @@ void MainWindow::ReloadSities()
 		auto sSityName = objQuerySity.value(1).toString();
 
 		pComboSity->addItem(sSityName, nID);
-		m_vecSities.emplaceBack(sSityName, nID);
+		m_mapSities[nID] = sSityName;
 	}
 }
 
@@ -210,7 +211,31 @@ void MainWindow::NeedChangeClients()
 
 void MainWindow::NeedChangeSity()
 {
+	auto pComboSity = ui->comboBox_Sity;
+	auto nClientID = ui->comboBox_Client->currentData().toInt();
+	auto nCurrSityID = pComboSity->currentData().toInt();
 
+	pComboSity->clear();
+	pComboSity->addItem("", -1);
+
+	if(nClientID > 0){
+	for(const auto &nSityID : m_mapSitiesByClient[nClientID]){
+		auto pIter = m_mapSities.find(nSityID);
+		if(pIter == m_mapSities.end())
+			continue;
+
+		pComboSity->addItem(pIter.value(), pIter.key());
+	}
+	}
+	else{
+		auto pIter = m_mapSities.begin();
+		for(; pIter != m_mapSities.end(); ++pIter)
+			pComboSity->addItem(pIter.value(), pIter.key());
+	}
+
+	int nIndex = pComboSity->findData(nCurrSityID);
+	if(nIndex > 0)
+		pComboSity->setCurrentIndex(nIndex);
 }
 
 void MainWindow::NeedChangeCards()

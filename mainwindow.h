@@ -11,7 +11,8 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 	QSettings m_objSettings;
 	QVector<std::pair<QString, int>> m_vecClients;
-	QVector<std::pair<QString, int>> m_vecSities;
+	QMap<int, QString> m_mapSities;
+	QMap<int, QSet<int>> m_mapSitiesByClient;
 	QVector<CardData> m_vecCurCards;
 	QSqlDatabase m_db;
 

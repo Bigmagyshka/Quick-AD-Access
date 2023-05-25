@@ -263,19 +263,22 @@ void edit_DB::on_Add_Sity_clicked(){
 }
 
 void edit_DB::on_Add_Shop_clicked(){
+	QString text = ui->Shop_Input->toPlainText();
 	try {
 		if (chosen_sity == -1) throw "Choose Sity!";
-		QString text = ui->Shop_Input->toPlainText();
 		if (text == "Введите название" || text == "") throw "Name can't be empty";
+
 		QSqlQuery Query(m_db);
 		Query.exec("SELECT Shops.id FROM Shops ORDER BY Shops.id DESC limit 1 ");
-		Query.next();
-		Query.exec("INSERT INTO Shops VALUES (" + QString::number(Query.value(0).toInt() + 1) + ",\"" +
-				   text + "\"," + QString::number(chosen_client) + "," +
-				   QString::number(chosen_sity) + ")");
+		Query.next();	
+		auto nNewID = Query.value(0).toInt() + 1;
+		auto sQuery = "INSERT INTO Shops VALUES (" + QString::number(nNewID) + ",'"
+			+ text + "'," + QString::number(chosen_client) + ","
+			+ QString::number(chosen_sity) + ",'')";
+
+		Query.exec(sQuery);
 		reload_Shops_Choose();
 		reload_Sities(2);
-
 	}  catch (const char* a) {
 		My_Error error(a);
 		error.exec();
@@ -309,20 +312,20 @@ void edit_DB::on_Add_Connection_clicked(){
 		if (Query.lastError().text() != "") throw Query.lastError().text();
 		reload_Connections();
 
-		AddWorker dlg(connect_shop, this);
-		if(dlg.exec() == 1)
-		{
-			auto sName = dlg.GetName();
-			auto sNumber = dlg.GetNumber();
-			auto sPosition = dlg.GetPosition();
+//		AddWorker dlg(connect_shop, this);
+//		if(dlg.exec() == 1)
+//		{
+//			auto sName = dlg.GetName();
+//			auto sNumber = dlg.GetNumber();
+//			auto sPosition = dlg.GetPosition();
 
-			auto sQuery = "INSERT INTO Workers VALUES (" + QString::number(connect_shop) + ", "
-					+ "'" + sName + "', '" + sNumber + "', '" + sPosition + "')";
-			Query.exec(sQuery);
-			if (Query.lastError().text() != "") throw Query.lastError().text();
+//			auto sQuery = "INSERT INTO Workers VALUES (" + QString::number(connect_shop) + ", "
+//					+ "'" + sName + "', '" + sNumber + "', '" + sPosition + "')";
+//			Query.exec(sQuery);
+//			if (Query.lastError().text() != "") throw Query.lastError().text();
 
-			reload_Workers();
-		}
+//			reload_Workers();
+//		}
 	}
 	catch (const char* a) {
 		My_Error error(a);
